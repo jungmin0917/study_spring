@@ -19,7 +19,7 @@ public class Coding {
 //	Computer computer = new Computer();
 
 //	필드 주입
-//	굉장히 편하게 주입할 수 있으나 순환 참조(무한루프) 시 오류가 발생하지 않기 때문에, Stack Overflow)가 발생한다.
+//	굉장히 편하게 주입할 수 있으나 순환 참조(무한루프) 시 오류가 발생하지 않기 때문에, Stack Overflow가 발생한다.
 //	final을 붙이지 않으면 외부에서 해당 클래스를 수정할 수 있어서 좋지 않은데, 필드 주입은 final을 붙일 수 없다는 단점이 있다 
 	@Autowired // 웹 어플리케이션 컨텍스트가 메모리에 올라가면서 자동으로 객체 관리를 해줌
 	private final Computer computer; // private은 붙여주는 게 좋다
