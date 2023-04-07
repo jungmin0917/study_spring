@@ -40,5 +40,6 @@ public class JDBCTests {
 		}catch(Exception e){
 			fail(e.getMessage()); // junit의 메소드로, 만약 Exception이 발생해서 여기에 들어오면, 무조건 실패로 처리를 한 후 실행 중지시킴. (강제종료)
 		}
+		
 	}
 }
