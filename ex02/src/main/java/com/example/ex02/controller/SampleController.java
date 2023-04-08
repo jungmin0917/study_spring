@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +66,49 @@ public class SampleController {
 		return "ex03";
 	}
 	// 게시글 첨부파일, 체크박스 쓰거나 할 때 사용이 될 것이다.
+	
+//	그대로 쓰면 infoDTO로 받는 쪽에서 쓸 수 있지만, 만약 객체명을 바꿔서 쓰고 싶으면 ModelAttribute 어노테이션을 사용한다
+//	만약 키값을 수정해서 쓰고 싶거나 매개변수가 많아진다면 직접 requestScope에 담아서 전달해야 한다.
+//	이 때 request 객체를 직접 불러오지 않고, Model이라는 데이터 전달자를 사용하게 된다.
+//	하지만 화면 쪽에 전달할 데이터가 1개라면, @ModelAttribute()를 사용하여 화면에 전달해준다.
+//	@ModelAttribute("화면에서 사용할 key값")
+	@GetMapping("/ex04")
+	public String ex04(@ModelAttribute("dto") InfoDTO infoDTO) {
+		log.info("-------------------");
+		log.info("ex04");
+		log.info(infoDTO.toString());
+		log.info("-------------------");
+		
+		return "ex04";
+	}
+	
+	// 아래와 같이 객체에 없는 다른 하나의 값을 더 넘기고 싶다면 아래와 같이 하면 된다.
+	@GetMapping("/ex05")
+	public void ex05(InfoDTO infoDTO, @ModelAttribute("gender") String gender) {
+		log.info("ex05-----------------");
+		log.info(infoDTO.toString());		
+		log.info("ex05-----------------");
+	}
+	
+	
+	// 이번엔 데이터 전달자인 Model 객체를 만들어서 넘겨보자.
+//	Model 객체는 파라미터로 request 객체를 받는다.
+//	따라서 여러 개의 데이터를 화면에 전달할 때, model.addAttribute(KEY, VALUE)를 사용한다.
+//	화면에서는 model에 설정한 KEY로 VALUE를 사용할 수 있다.
+	
+	
+	@GetMapping("/ex06")
+	public String ex06(InfoDTO infoDTO, String gender, Model model) {
+		log.info("ex06-----------------");
+		log.info(infoDTO.toString());
+		log.info("gender : " + gender);
+		
+		// 위와 비교해보면 다른 게, 직접 매개변수 쪽에서 @ModelAttribute 어노테이션을 사용하지 않고 여기서 model 객체를 사용하여 넘긴다.
+		model.addAttribute("dto", infoDTO);
+		model.addAttribute("gender", gender);
+		
+		return "ex/ex06";
+	}
 }
 
 
