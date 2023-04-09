@@ -1,5 +1,6 @@
 package com.example.ex02.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 
 import org.springframework.stereotype.Controller;
@@ -133,7 +134,14 @@ public class ExampleController {
 	public String change(ProductVO productVO, Model model) {
 		model.addAttribute(productVO);
 		
-		log.info(productVO);
+		// 할인율 적용하여 계산하기
+		
+		double salePrice = productVO.getProductPrice() * (100 - productVO.getProductRate()) / 100.0;
+		
+		DecimalFormat df = new DecimalFormat("0.00");
+		String formattedPrice = df.format(salePrice);
+		
+		model.addAttribute("salePrice", formattedPrice);
 		
 		return "/product/showChange";
 	}
