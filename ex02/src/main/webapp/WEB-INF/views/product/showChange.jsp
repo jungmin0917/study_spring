@@ -51,10 +51,13 @@
 	</table>
 	
 	<form action="/usePoint" method="POST" name="discountForm" id="discountForm">
-		<input type="hidden" name="productNumber" value="${product.productNumber}">
-		<input type="hidden" name="productPrice" value="${product.productPrice}">
+		<input type="hidden" name="productNumber" value="${productVO.productNumber}">
+		<input type="hidden" name="productName" value="${productVO.productName}">
+		<input type="hidden" name="productPrice" value="${salePrice}">
 		<input type="submit" value="포인트 사용하여 상품 구매하기" class="discSubmit">
 	</form>
+	
+	<br>
 	
 	<input type="button" onclick="location.href='/sale'" value="상품 및 할인률 변경하기" class="discSubmit">
 		

@@ -31,14 +31,19 @@
 			font-weight: bold;
 		}
 		
+		div{
+			text-align: center;	
+		}
+		
 	</style>
 </head>
 
 <body>
-	<form action="/change" method="POST" id="saleForm">
+	<form action="/use" method="POST" id="saleForm">
 		
-		<input type="hidden" name="productName">
-		<input type="hidden" name="productPrice">
+		<input type="hidden" name="productNumber" value="${productVO.productNumber}">
+		<input type="hidden" name="productName" value="${productVO.productName}">
+		<input type="hidden" name="productPrice" value="${productVO.productPrice}">
 		
 		<table border="1">
 			<tr>
@@ -108,10 +113,11 @@
 
 <script type="text/javascript">
 
-	let productNumber = "${product.productNumber}";
-	let productPrice = "${product.productPrice}";
+	let productNumber = "${productVO.productNumber}";
+	let productPrice = "${productVO.productPrice}";
 
 	$("body").on("click", "input[name='productNumber']", function(){
+		$("input[name='productNumber']").val($(this).val());
 		$("input[name='productName']").val($(this).closest("tr").find("td:nth-of-type(2)").html().trim());
 		$("input[name='productPrice']").val($(this).closest("tr").find("td:nth-of-type(3)").html().trim());
 	});
@@ -119,7 +125,12 @@
 	$(document).ready(function(){
 		$("input[name='productNumber']").each(function(i, input){
 			if($(input).val() == productNumber){
-				
+				const priceTag = $(input).closest("tr").children()[2];
+				const trTag = $(input).closest("tr");
+
+				$(trTag).css("background-color", "red");
+				$(trTag).css("color", "white");
+				$(priceTag).text(productPrice);
 			}
 		});
 	});

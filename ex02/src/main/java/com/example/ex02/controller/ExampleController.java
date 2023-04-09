@@ -136,20 +136,33 @@ public class ExampleController {
 		
 		// 할인율 적용하여 계산하기
 		
-		double salePrice = productVO.getProductPrice() * (100 - productVO.getProductRate()) / 100.0;
+		int salePrice = productVO.getProductPrice() * (100 - productVO.getProductRate()) / 100;
 		
-		DecimalFormat df = new DecimalFormat("0.00");
-		String formattedPrice = df.format(salePrice);
-		
-		model.addAttribute("salePrice", formattedPrice);
+		model.addAttribute("salePrice", salePrice);
 		
 		return "/product/showChange";
 	}
 	
 	
-	@PostMapping
+	@PostMapping("/usePoint")
 	public String usePoint(ProductVO productVO) {
 		return "/product/usePoint";
+	}
+	
+	@PostMapping("/use")
+	public String use(ProductVO productVO, int point, Model model) {
+		int cash = productVO.getProductPrice() - point; // 현금결제 가격
+		
+		if(point > productVO.getProductPrice()) {
+			point = productVO.getProductPrice();
+			cash = 0;
+		}
+		
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("point", point);
+		model.addAttribute("cash", cash);
+		
+		return "/product/payment"; // 영수증 페이지로 이동
 	}
 }
 

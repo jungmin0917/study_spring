@@ -140,9 +140,6 @@
 		let name = $("input[name='productNumber']:checked").closest("tr").find("td:nth-of-type(2)").html().trim();
 		let price = $("input[name='productNumber']:checked").closest("tr").find("td:nth-of-type(3)").html().trim();
 		
-		console.log(name);
-		console.log(price);
-		
 		$("input[name='productName']").val(name);
 		$("input[name='productPrice']").val(price);
 		$("input[name='productRate']").val(rate);
