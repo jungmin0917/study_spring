@@ -146,6 +146,11 @@ public class ExampleController {
 		return "/product/showChange";
 	}
 	
+	
+	@PostMapping
+	public String usePoint(ProductVO productVO) {
+		return "/product/usePoint";
+	}
 }
 
 
