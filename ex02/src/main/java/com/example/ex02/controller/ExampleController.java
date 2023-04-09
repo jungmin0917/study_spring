@@ -63,4 +63,74 @@ public class ExampleController {
 		
 		return res;
 	}
+	
+	
+	// 상품의 바코드를 입력받고 해당 상품명을 출력한다
+	// 오징어 땅콩 4383927
+	// 초코 우유 0832147
+	// 벌꿀 피자 9841631
+	// 샌드위치 5587578
+	
+	@GetMapping("/goods")
+	public String goods() {
+		log.info("goods에 진입");
+		
+		return "/market/goods";
+	}
+	
+	@PostMapping("/goods/action")
+	public String goodsAction(String barcode, Model model) {
+		String productName = null;
+		
+		switch (barcode) {
+		case "4383927":
+			productName = "오징어 땅콩";
+			break;
+		case "0832147":
+			productName = "초코 우유";
+			break;
+		case "9841631":
+			productName = "벌꿀 피자";
+			break;
+		case "5587578":
+			productName = "샌드위치";
+			break;
+		default:
+			productName = "없는 상품";
+			break;
+		}
+		
+		model.addAttribute("productName", productName);
+		
+		return "/market/cashier";
+	}
+	
+//	선택한 할인률을 해당 상품에 적용
+//	버튼을 여러 개 만들어서 클릭된 할인률만큼 상품의 가격 적용
+	
+//	@GetMapping("/sale")
+//	메소드명 : goChangeSale
+//	saleChange.jsp
+//	선택, 상품명, 가격 총 3개의 항목으로 구성한다
+//	각 상품의 선택 부분은 radio 버튼으로 구성한다.
+//	할인율 버튼은 총 4개의 버튼으로 제작하고,
+//	각각 10%, 30%, 60%, 90%
+//	마지막에 적용 버튼을 제작하여 form 태그를 전송한다
+	
+//	@PostMapping("/change")
+//	메소드명 : change
+//	상품 모델 객체로 전체 내용을 전달받는다
+//	전달받은 상품 가격에 할인율을 적용한 가격을 showChange.jsp로 전달한다
+	
 }
+
+
+
+
+
+
+
+
+
+
+
