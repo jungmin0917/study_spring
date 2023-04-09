@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.ex02.domain.vo.ProductVO;
+
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -121,6 +123,20 @@ public class ExampleController {
 //	메소드명 : change
 //	상품 모델 객체로 전체 내용을 전달받는다
 //	전달받은 상품 가격에 할인율을 적용한 가격을 showChange.jsp로 전달한다
+	
+	@GetMapping("/sale")
+	public String goChangeSale() {
+		return "/product/saleChange";
+	}
+	
+	@PostMapping("/change")
+	public String change(ProductVO productVO, Model model) {
+		model.addAttribute(productVO);
+		
+		log.info(productVO);
+		
+		return "/product/showChange";
+	}
 	
 }
 
