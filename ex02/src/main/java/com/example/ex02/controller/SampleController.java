@@ -29,10 +29,10 @@ public class SampleController {
 		log.info("basic" + req.getMethod());
 	}
 	
-	@RequestMapping
-	public void basic2() {
-		log.info("basic2");
-	}
+//	@RequestMapping
+//	public void basic2() {
+//		log.info("basic2");
+//	}
 	
 	// @RequestMapping(method = RequestMethod.GET)과 동일함
 	// 좀 더 짧게 GET요청에 대해서만 받고 싶을 때 이렇게 쓰면 됨
@@ -111,18 +111,18 @@ public class SampleController {
 		return "ex/ex06";
 	}
 	
-	@GetMapping
+//	@GetMapping
 //	외부에서 학생의 번호, 국어, 영어, 수학 점수를 모델 객체로 전달받는다.
 //	파라미터명과 매개변수에 선언된 모델 객체의 필드명이 동일하면 자동으로 매핑된다.
 //	리턴 시 명시한 페이지로 이동이 되고, 모델 객체는 직접 KEY를 지정하지 않아도
 //	View쪽에서 앞글자만 소문자로 바뀐 값으로 해당 필드에 접근할 수 있다
-	public String ex07(StudentVO studentVO) {
-		log.info("ex07------------------------------");
-		
-		log.info(studentVO.toString());
-		
-		return "ex/ex07";
-	}
+//	public String ex07(StudentVO studentVO) {
+//		log.info("ex07------------------------------");
+//		
+//		log.info(studentVO.toString());
+//		
+//		return "ex/ex07";
+//	}
 }
 
 
