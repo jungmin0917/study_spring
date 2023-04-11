@@ -21,35 +21,34 @@
 					<!-- Elements -->
 					<header class="major">
 						<h1>Board</h1>
-						<p>게시글 상세보기</p>
+						<p>게시글 수정하기</p>
 					</header>
 					<!-- Table -->
 					<h3><a href="/board/list" class="button small">목록 보기</a></h3>
 					<div class="content">
 						<div class="form">
-							<form action="/board/remove">
+							<form action="/board/modify" method="POST">
 								<div class="fields">
 									<div class="field">
 										<h4>번호</h4>
 										<input type="text" name="bno" value="${board.bno}" readonly>
 									</div>
 									<div class="field">
-										<h4>제목</h4>
-										<input type="text" name="title" value="${board.title}" readonly>
+										<h4>*제목</h4>
+										<input type="text" name="title" value="${board.title}">
 									</div>
 									<div class="field">
-										<h4>내용</h4>
-										<textarea name="content" rows="6" style="resize:none;" readonly>${board.content}</textarea>
+										<h4>*내용</h4>
+										<textarea name="content" rows="6" style="resize:none;">${board.content}</textarea>
 									</div>
 									<div class="field">
-										<h4>작성자</h4>
-										<input type="text" name="writer" value="${board.writer}" readonly>
+										<h4>*작성자</h4>
+										<input type="text" name="writer" value="${board.writer}">
 									</div>
 								</div>
 								<ul class="actions special">
 									<li>
-										<input type="button" class="button" value="수정" onclick="location.href='/board/modify?bno=${board.bno}'"/>
-										<input type="submit" class="button" value="삭제"/>
+										<input type="submit" class="button" value="수정 완료"/>
 									</li>
 								</ul>
 							</form>
