@@ -14,13 +14,13 @@ import com.example.board.service.BoardService;
 import lombok.extern.log4j.Log4j;
 
 /**
- * Task		URL				Method		Parameter		Form				URL이동
+ * Task		URL				Method		Parameter		result		Form				URL이동
  * 
- * 전체 목록	/board/list		GET							X					
- * 등록 처리	/board/register	POST		BoardVO			입력화면 필요(글쓰기)	전체 목록으로
- * 조회		/board/read		GET			bno				X					상세페이지로
- * 삭제 처리	/board/remove	GET			bno				입력화면 필요(상세P)		전체 목록으로
- * 수정 처리	/board/modify	POST		BoardVO			입력화면 필요(글쓰기)	글쓰기 페이지로
+ * 전체 목록	/board/list		GET							List		X					
+ * 등록 처리	/board/register	POST		BoardVO			bno			입력화면 필요(글쓰기)	전체 목록으로
+ * 조회		/board/read		GET			bno				boardVO		X					
+ * 삭제 처리	/board/remove	GET			bno				boolean		입력화면 필요(상세P)		전체 목록으로
+ * 수정 처리	/board/modify	POST		BoardVO			boolean		입력화면 필요(글쓰기)	글쓰기 페이지로
  * 
  */
 
@@ -55,6 +55,38 @@ public class BoardController {
 		
 //		redirect로 이동할 때는, 경로 앞에 "redirect:"를 붙여 준다
 		return "redirect:/board/list"; // 등록 후 /board/list로 리다이렉트 (이전 Request 내용 비움)
+	}
+	
+	// 조회
+	@GetMapping("/read")
+	public void read(Long bno, Model model) {
+		log.info("/read : " + bno);
+		
+		model.addAttribute("board", boardService.get(bno));
+	}
+	
+	// 삭제 처리
+	@GetMapping("/remove")
+	public String remove(Long bno, RedirectAttributes rttr) {
+		log.info("/remove : " + bno);
+		
+		if(boardService.remove(bno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		return "redirect:/board/list";
+	}
+	
+	// 수정 처리
+	@PostMapping("/modify")
+	public String modify(BoardVO boardVO, RedirectAttributes rttr) {
+		log.info("/modify : " + boardVO);
+		
+		if(boardService.modify(boardVO)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		return "redirect:/board/list";
 	}
 }
 

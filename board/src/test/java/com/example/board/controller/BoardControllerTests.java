@@ -33,20 +33,56 @@ public class BoardControllerTests {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
+	// 전체 목록
 //	@Test
 //	public void listTest() throws Exception {
 //		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")).andReturn().getModelAndView().getModelMap());
 //	}
 	
+	// 등록 처리
+//	@Test
+//	public void registerTest() throws Exception{
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+//				.param("title", "테스트 새 글 제목")
+//				.param("content", "테스트 새 글 내용")
+//				.param("writer", "hgd0000")
+//				).andReturn().getFlashMap());
+//	}
+	
+	// 조회
+//	@Test
+//	public void readTest() throws Exception{
+//		Long bno = 12L;
+//		
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/read")
+//				.param("bno", bno.toString())
+//				).andReturn().getModelAndView().getModelMap());
+//	}
+	
+	// 삭제 처리
+//	@Test
+//	public void removeTest() throws Exception{
+//		
+//		Long bno = 8L;
+//		
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/remove")
+//				.param("bno", bno.toString())
+//				).andReturn().getFlashMap());
+//	}
+	
+	// 수정 처리
 	@Test
-	public void registerTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
-				.param("title", "테스트 새 글 제목")
-				.param("content", "테스트 새 글 내용")
-				.param("writer", "hgd0000")
+	public void modifyTest() throws Exception{
+		
+		Long bno = 7L;
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+				.param("title", "수정한 게시글 제목")
+				.param("content", "수정한 게시글 내용")
+				.param("writer", "codingman")
+				.param("bno", bno.toString())
 				).andReturn().getFlashMap());
 	}
-	
 }
 
 
