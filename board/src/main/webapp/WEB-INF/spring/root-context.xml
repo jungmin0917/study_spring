@@ -36,8 +36,7 @@
 		
 	</bean>
 	
-	<context:component-scan base-package="com.example.board.exception"/>
-	
+<!-- 	매퍼 인터페이스 위치 설정 -->
 	<mybatis-spring:scan base-package="com.example.board.mapper"/>
 </beans>
 

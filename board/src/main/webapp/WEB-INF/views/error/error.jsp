@@ -8,6 +8,6 @@
 <title>Error</title>
 </head>
 <body>
-
+	<h1>오류 페이지</h1>
 </body>
 </html>
