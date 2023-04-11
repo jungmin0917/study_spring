@@ -28,17 +28,38 @@ public class BoardMapperTests {
 //		boardMapper.getList().forEach(log::info);
 //	}
 	
+//	@Test
+//	public void insertTest() {
+//		BoardVO board = new BoardVO();
+//		
+//		board.setTitle("새로 작성한 글 제목5");
+//		board.setContent("새로 작성한 글 내용5");
+//		board.setWriter("user05");
+//		
+//		boardMapper.insert(board);
+//		
+//		log.info(board);
+//	}
+	
+//	@Test
+//	public void readTest() {
+//		BoardVO board = boardMapper.read(5L);
+//		
+//		log.info(board);
+//	}
+	
 	@Test
-	public void insertTest() {
-		BoardVO board = new BoardVO();
+	public void deleteTest() {
+		// 해당 게시글이 있는지부터 확인
+		Long bno = 5L;
 		
-		board.setTitle("새로 작성한 글 제목3");
-		board.setContent("새로 작성한 글 내용3");
-		board.setWriter("user03");
+		// 게시글이 존재할 때만 삭제
+		if(boardMapper.read(bno) != null) {
+			log.info("DELETE COUNT : " + boardMapper.delete(bno));
+			return;
+		}
 		
-		boardMapper.insert(board);
-		
-		log.info(board);
+		log.info("NO BOARD");
 	}
 }
 
