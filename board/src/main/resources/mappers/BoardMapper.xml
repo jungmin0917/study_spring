@@ -3,9 +3,16 @@
 
 <mapper namespace="com.example.board.mapper.BoardMapper">
 	<select id="getList" resultType="boardVO">
+	<![CDATA[
 		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
-		FROM JUNGMIN_BOARD
-		ORDER BY BNO DESC
+		FROM
+		(
+			SELECT /*+ INDEX_DESC(JUNGMIN_BOARD, SYS_C007114) */
+			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
+			FROM JUNGMIN_BOARD WHERE ROWNUM <= #{pageNum} * #{amount}
+		)
+		WHERE RN > (#{pageNum} - 1) * #{amount}
+	]]>
 	</select>
 	
 <!-- 파라미터 타입 생략해도 됨! 연결된 메소드에 있는 파라미터 타입을 알아서 읽음 -->

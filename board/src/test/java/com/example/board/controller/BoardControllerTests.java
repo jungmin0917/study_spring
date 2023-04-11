@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.example.board.domain.vo.Criteria;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,10 +36,10 @@ public class BoardControllerTests {
 	}
 	
 	// 전체 목록
-//	@Test
-//	public void listTest() throws Exception {
-//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")).andReturn().getModelAndView().getModelMap());
-//	}
+	@Test
+	public void listTest() throws Exception {
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list").param("pageNum", "1").param("amount", "10")).andReturn().getModelAndView().getModelMap());
+	}
 	
 	// 등록 처리
 //	@Test
@@ -84,12 +86,12 @@ public class BoardControllerTests {
 //				).andReturn().getFlashMap());
 //	}
 	
-	@Test
-	public void goModifyTest() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.get("/board/modify")
-				.param("bno", "7")
-				);
-	}
+//	@Test
+//	public void goModifyTest() throws Exception{
+//		mockMvc.perform(MockMvcRequestBuilders.get("/board/modify")
+//				.param("bno", "7")
+//				);
+//	}
 }
 
 
