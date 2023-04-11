@@ -48,17 +48,33 @@ public class BoardMapperTests {
 //		log.info(board);
 //	}
 	
+//	@Test
+//	public void deleteTest() {
+//		// 해당 게시글이 있는지부터 확인
+//		Long bno = 5L;
+//		
+//		// 게시글이 존재할 때만 삭제
+//		if(boardMapper.read(bno) != null) {
+//			log.info("DELETE COUNT : " + boardMapper.delete(bno));
+//			return;
+//		}
+//		
+//		log.info("NO BOARD");
+//	}
+	
 	@Test
-	public void deleteTest() {
-		// 해당 게시글이 있는지부터 확인
-		Long bno = 5L;
+	public void updateTest() {
+		BoardVO board = boardMapper.read(1L);
 		
-		// 게시글이 존재할 때만 삭제
-		if(boardMapper.read(bno) != null) {
-			log.info("DELETE COUNT : " + boardMapper.delete(bno));
+		if(board != null) {
+			board.setTitle("수정된 제목");
+			board.setContent("수정된 내용");
+			board.setWriter("user00");
+			
+			log.info("UPDATE COUNT : " + boardMapper.update(board));	
 			return;
 		}
-		
+
 		log.info("NO BOARD");
 	}
 }
