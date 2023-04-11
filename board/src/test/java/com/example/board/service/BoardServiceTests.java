@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.example.board.domain.vo.BoardVO;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,8 +20,89 @@ public class BoardServiceTests {
 	@Autowired
 	private BoardService boardService;
 	
+//	@Test
+//	public void serviceTest() {
+//		log.info(boardService);
+//	}
+//	
+//	@Test
+//	public void registerTest() {
+//		BoardVO boardVO = new BoardVO();
+//		
+//		boardVO.setTitle("새 글 제목");
+//		boardVO.setContent("새 글 내용");
+//		boardVO.setWriter("새 글 작성자");
+//		
+//		boardService.register(boardVO);
+//		
+//		log.info("생성된 게시글 번호 : " + boardVO.getBno());
+//	}
+	
+//	@Test
+//	public void getTest() {
+//		BoardVO boardVO = boardService.get(9L);
+//		
+//		if(boardVO != null) {
+//			log.info(boardVO);
+//			return;
+//		}
+//		
+//		log.info("NO BOARD");
+//	}
+	
+//	@Test
+//	public void modifyTest() {
+//		BoardVO boardVO = boardService.get(0L);
+//		
+//		if(boardVO == null) {
+//			log.info("NO BOARD");
+//			return;
+//		}
+//		
+//		boardVO.setTitle("바뀐 제목");
+//		boardVO.setContent("바뀐 내용");
+//		boardVO.setWriter("바뀐 작성자");
+//		
+//		if(boardService.modify(boardVO)) {
+//			log.info("UPDATE SUCCESS");
+//			return;
+//		}
+//		
+//		log.info("UPDATE FAILURE");
+//		
+//	}
+	
+//	@Test
+//	public void removeTest() {
+//		Long bno = 9L;
+//		
+//		BoardVO boardVO = boardService.get(bno);
+//		
+//		if(boardVO == null) {
+//			log.info("NO BOARD");
+//			return;
+//		}
+//		
+//		if(boardService.remove(bno)) {
+//			log.info("DELETE SUCCESS");
+//			return;
+//		}
+//		
+//		log.info("DELETE FAILURE");
+//	}
+	
 	@Test
-	public void serviceTest() {
-		log.info(boardService);
+	public void getListTest() {
+		boardService.getList().forEach(log::info);
 	}
+	
 }
+
+
+
+
+
+
+
+
+
