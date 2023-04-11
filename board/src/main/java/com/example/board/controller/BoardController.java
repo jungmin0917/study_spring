@@ -1,5 +1,7 @@
 package com.example.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,11 +59,16 @@ public class BoardController {
 		return "redirect:/board/list"; // 등록 후 /board/list로 리다이렉트 (이전 Request 내용 비움)
 	}
 	
-	// 조회
-	@GetMapping("/read")
-	public void read(Long bno, Model model) {
-		log.info("/read : " + bno);
+	// 조회 (게시글 조회와 수정이 비슷하므로 같이 받는다)
+	@GetMapping({"/read", "/modify"})
+	public void read(Long bno, HttpServletRequest request, Model model) {
 		
+		// HttpServletRequest.getRequestURI 메소드를 이용하여 URI를 구한다
+		String url = request.getRequestURI();
+		String subUrl = url.substring(url.lastIndexOf("/"));
+		
+		log.info(subUrl + " : " + bno);
+
 		model.addAttribute("board", boardService.get(bno));
 	}
 	
@@ -88,6 +95,11 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
+	// 게시글 작성 페이지
+	@GetMapping("/register") // 위의 등록 처리와 URL은 같으나 요청 방식이 다름
+	public void register() {;} // 이렇게 하면 그냥 요청한 URL과 같은 JSP로 이동함 (이 경우엔 /board/register.jsp)
+	
 }
 
 

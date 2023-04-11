@@ -71,17 +71,24 @@ public class BoardControllerTests {
 //	}
 	
 	// 수정 처리
+//	@Test
+//	public void modifyTest() throws Exception{
+//		
+//		Long bno = 7L;
+//		
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+//				.param("title", "수정한 게시글 제목")
+//				.param("content", "수정한 게시글 내용")
+//				.param("writer", "codingman")
+//				.param("bno", bno.toString())
+//				).andReturn().getFlashMap());
+//	}
+	
 	@Test
-	public void modifyTest() throws Exception{
-		
-		Long bno = 7L;
-		
-		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
-				.param("title", "수정한 게시글 제목")
-				.param("content", "수정한 게시글 내용")
-				.param("writer", "codingman")
-				.param("bno", bno.toString())
-				).andReturn().getFlashMap());
+	public void goModifyTest() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/board/modify")
+				.param("bno", "7")
+				);
 	}
 }
 
