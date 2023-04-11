@@ -12,7 +12,7 @@ import com.example.board.mapper.BoardMapper;
 public class BoardDAOImpl implements BoardDAO {
 
 	@Autowired
-	BoardMapper boardMapper;
+	private BoardMapper boardMapper;
 	
 	@Override
 	public void register(BoardVO board) {

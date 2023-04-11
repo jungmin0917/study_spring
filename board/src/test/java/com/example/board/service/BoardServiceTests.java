@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class BoardServiceTests {
 	
 //	@Test
 //	public void getTest() {
-//		BoardVO boardVO = boardService.get(9L);
+//		BoardVO boardVO = boardService.get(11L);
 //		
 //		if(boardVO != null) {
 //			log.info(boardVO);
@@ -50,9 +51,9 @@ public class BoardServiceTests {
 //		log.info("NO BOARD");
 //	}
 	
-//	@Test
+//	@Before // 이 어노테이션을 달면 먼저 시작함 (@Test는 빼야 함)
 //	public void modifyTest() {
-//		BoardVO boardVO = boardService.get(0L);
+//		BoardVO boardVO = boardService.get(7L);
 //		
 //		if(boardVO == null) {
 //			log.info("NO BOARD");
@@ -74,7 +75,7 @@ public class BoardServiceTests {
 	
 //	@Test
 //	public void removeTest() {
-//		Long bno = 9L;
+//		Long bno = 11L;
 //		
 //		BoardVO boardVO = boardService.get(bno);
 //		

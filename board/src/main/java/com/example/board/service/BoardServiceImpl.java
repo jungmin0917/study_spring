@@ -12,7 +12,7 @@ import com.example.board.domain.vo.BoardVO;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	BoardDAO boardDAO;
+	private BoardDAO boardDAO;
 	
 	@Override
 	public void register(BoardVO board) {
