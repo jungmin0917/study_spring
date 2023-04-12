@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 		<style>
-			body {transform: scale(0.8); margin-top: -50px;}
+			body {transform: scale(0.8); margin-top: -50px; overflow-x: hidden;}
 		</style>
 	</head>
 	<body class="is-preload">

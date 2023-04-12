@@ -9,7 +9,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 		<style>
-			body {transform: scale(0.8);}
+			body {transform: scale(0.8); overflow-x: hidden;}
+			
+			@media(max-width: 918px){
+				body {transform: scale(1);}
+				.writer {display: none;}
+				.regDate {display: none;}
+				.updateDate {display: none;}
+			}
 		</style>
 	</head>
 	<body class="is-preload">
