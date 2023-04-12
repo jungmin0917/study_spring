@@ -7,7 +7,7 @@
 		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
 		FROM
 		(
-			SELECT /*+ INDEX_DESC(JUNGMIN_BOARD, SYS_C006998) */
+			SELECT /*+ INDEX_DESC(JUNGMIN_BOARD, SYS_C007166) */
 			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
 			FROM JUNGMIN_BOARD WHERE ROWNUM <= #{pageNum} * #{amount}
 		)
@@ -41,6 +41,10 @@
 		SET TITLE = #{title}, CONTENT = #{content}, WRITER = #{writer}, UPDATEDATE = SYSDATE
 		WHERE BNO = #{bno}
 	</update>
+	
+	<select id="getTotal" resultType="_int">
+		SELECT COUNT(BNO) FROM JUNGMIN_BOARD
+	</select>
 </mapper>
 
 

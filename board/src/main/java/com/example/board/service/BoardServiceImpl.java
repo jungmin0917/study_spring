@@ -39,5 +39,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> getList(Criteria criteria) {
 		return boardDAO.getList(criteria);
 	}
+	
+	@Override
+	public int getTotal() {
+		return boardDAO.getTotal();
+	}
 
 }

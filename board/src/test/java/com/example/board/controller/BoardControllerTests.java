@@ -86,6 +86,7 @@ public class BoardControllerTests {
 //				).andReturn().getFlashMap());
 //	}
 	
+	// 수정 페이지로 이동 처리
 //	@Test
 //	public void goModifyTest() throws Exception{
 //		mockMvc.perform(MockMvcRequestBuilders.get("/board/modify")

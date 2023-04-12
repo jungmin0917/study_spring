@@ -97,6 +97,12 @@
 								</a>
 							</c:if>
 						</div>
+						
+						<%-- 위의 changePage a태그의 href 값을 가져와서 여기 hidden값에 넣어서 submit하겠다는 것 --%>
+						<form name="pageForm" action="/board/list">
+							<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
+						</form>
+						
 					</div>
 				</div>
 			</div>
@@ -111,8 +117,31 @@
 	<script src="/resources/assets/js/main.js"></script>
 	
 	<script type="text/javascript">
+		// 페이지 이동 스크립트
 		$("body").on("click", "a.changePage", function(e){
 			e.preventDefault(); // 기존 이벤트 막음
+			
+			let $form = $(document.pageForm);
+			
+			let href = $(this).attr("href");
+
+			$form.find("input[name='pageNum']").val(href);
+			
+			$form.submit();
 		});
+		
+		
+		
+		
 	</script>
 </html>
+
+
+
+
+
+
+
+
+
+
