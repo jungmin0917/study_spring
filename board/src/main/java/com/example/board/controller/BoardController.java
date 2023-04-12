@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.board.domain.vo.BoardVO;
 import com.example.board.domain.vo.Criteria;
+import com.example.board.domain.vo.PageDTO;
 import com.example.board.service.BoardService;
 
 import lombok.extern.log4j.Log4j;
@@ -39,7 +40,12 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria criteria, Model model) {
 		log.info("/list");
+		
+		// boardList 객체 (게시글 전체 목록)를 넘긴다
 		model.addAttribute("boardList", boardService.getList(criteria));
+		
+		// PageDTO 객체(페이징 관련 객체)도 넘긴다
+		model.addAttribute("pageDTO", new PageDTO(criteria, 2048));
 	}
 	
 	// 등록 처리
