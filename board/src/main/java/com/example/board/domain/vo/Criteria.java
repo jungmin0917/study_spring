@@ -3,7 +3,6 @@ package com.example.board.domain.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-
 // 리스트 페이징용 객체
 
 @Data
@@ -15,4 +14,5 @@ public class Criteria {
 	public Criteria() {
 		this(1, 10);
 	}
+	
 }

@@ -52,9 +52,51 @@
 									</tr>
 								</c:forEach>
 							</tbody>
-							<tfoot>
-							</tfoot>
 						</table>
+						
+						<style>
+							.page_wrap{
+								display: flex;
+    							justify-content: center;
+							}	
+						</style>
+						
+						<%-- 여기에 페이지 정보 구현1 --%>
+						<div class="page_wrap">
+							<c:if test="${pageDTO.prev}">
+								<a class="changePage" href="${pageDTO.startPage - 1}">
+									<code>
+										&lt;
+									</code>
+								</a>
+							</c:if>
+
+							<c:forEach var="num" begin="${pageDTO.startPage}" end="${pageDTO.endPage}">
+								<c:choose>
+									<c:when test="${pageDTO.criteria.pageNum == num}">
+										<code>
+											<c:out value="${num}"/>
+										</code>
+									</c:when>
+									<c:otherwise>
+										<a class="changePage" href="${num}">
+											<code>
+												<c:out value="${num}"/>
+											</code>
+										</a>
+									</c:otherwise>
+								</c:choose>
+							
+							</c:forEach>
+							
+							<c:if test="${pageDTO.next}">
+								<a class="changePage" href="${pageDTO.endPage + 1}">
+									<code>
+										&gt;
+									</code>
+								</a>
+							</c:if>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -67,4 +109,10 @@
 	<script src="/resources/assets/js/breakpoints.min.js"></script>
 	<script src="/resources/assets/js/util.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+	
+	<script type="text/javascript">
+		$("body").on("click", "a.changePage", function(e){
+			e.preventDefault(); // 기존 이벤트 막음
+		});
+	</script>
 </html>

@@ -31,7 +31,7 @@ public class PageDTO {
 		this.total = total;
 		
 		// ceil(실수 값) : 올림 처리, 페이지에 게시글이 한 개라도 있으면 올림을 해야 함 (페이지가 하나 더 필요)
-		this.endPage = (int)(Math.ceil((double)total / criteria.getAmount())) * criteria.getAmount();
+		this.endPage = (int)(Math.ceil((double)(criteria.getPageNum()) / criteria.getAmount())) * criteria.getAmount();
 		
 		// total을 DB에서 조회해서 받아왔다고 가정하고 계산
 		// (전체 페이지 개수 / amount)을 하여 올림을 한다
