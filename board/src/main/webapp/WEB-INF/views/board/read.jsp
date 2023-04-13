@@ -24,7 +24,7 @@
 						<p>게시글 상세보기</p>
 					</header>
 					<!-- Table -->
-					<h3><a href="/board/list" class="button small">목록 보기</a></h3>
+					<h3><a href="/board/list${criteria.getParams()}" class="button small">목록 보기</a></h3>
 					<div class="content">
 						<div class="form">
 							<form action="/board/remove">
@@ -48,7 +48,7 @@
 								</div>
 								<ul class="actions special">
 									<li>
-										<input type="button" class="button" value="수정" onclick="location.href='/board/modify?bno=${board.bno}'"/>
+										<input type="button" class="button" value="수정" onclick="location.href='/board/modify${criteria.getParams()}&bno=${board.bno}'"/>
 										<input type="submit" class="button" value="삭제"/>
 									</li>
 								</ul>

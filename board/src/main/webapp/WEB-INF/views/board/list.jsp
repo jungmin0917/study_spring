@@ -10,13 +10,24 @@
 		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 		<style>
 			body {transform: scale(0.8); overflow-x: hidden;}
+			.big-width {display: block;}
+			.small-width {display: none;}
+			
+			code{
+			    display: inline-flex;
+			    height: 25px;
+    			align-items: center;
+			}
 			
 			@media(max-width: 918px){
 				body {transform: scale(1);}
 				.writer {display: none;}
 				.regDate {display: none;}
 				.updateDate {display: none;}
+				.big-width {display: none;}
+				.small-width {display: block;}
 			}
+			
 		</style>
 	</head>
 	<body class="is-preload">
@@ -49,7 +60,7 @@
 									<tr class="tBody">
 										<td class="bno">${board.bno}</td>
 										<td class="title">
-											<a href="/board/read?bno=${board.bno}">
+											<a href="/board/read${pageDTO.criteria.getParams()}&bno=${board.bno}">
 												${board.title}
 											</a>
 										</td>
@@ -61,15 +72,8 @@
 							</tbody>
 						</table>
 						
-						<style>
-							.page_wrap{
-								display: flex;
-    							justify-content: center;
-							}	
-						</style>
-						
-						<%-- 여기에 페이지 정보 구현1 --%>
-						<div class="page_wrap">
+						<%-- 여기에 페이지 정보 구현 --%>
+						<div class="page_wrap big-width" style="text-align: center;">
 							<c:if test="${pageDTO.prev}">
 								<a class="changePage" href="${pageDTO.startPage - 1}">
 									<code>
@@ -98,6 +102,28 @@
 							
 							<c:if test="${pageDTO.next}">
 								<a class="changePage" href="${pageDTO.endPage + 1}">
+									<code>
+										&gt;
+									</code>
+								</a>
+							</c:if>
+						</div>
+						
+						<div class="page_wrap small-width" style="text-align: center;">
+							<c:if test="${pageDTO.criteria.pageNum > 1}">
+								<a class="changePage" href="${pageDTO.criteria.pageNum - 1}">
+									<code>
+										&lt;
+									</code>
+								</a>
+							</c:if>
+
+							<code>
+								<c:out value="${pageDTO.criteria.pageNum}"/>
+							</code>
+							
+							<c:if test="${pageDTO.criteria.pageNum < pageDTO.realEnd}">
+								<a class="changePage" href="${pageDTO.criteria.pageNum + 1}">
 									<code>
 										&gt;
 									</code>

@@ -68,7 +68,7 @@ public class BoardController {
 	
 	// 조회 (게시글 조회와 수정이 비슷하므로 같이 받는다)
 	@GetMapping({"/read", "/modify"})
-	public void read(Long bno, HttpServletRequest request, Model model) {
+	public void read(Criteria criteria, Long bno, HttpServletRequest request, Model model) {
 		
 		// HttpServletRequest.getRequestURI 메소드를 이용하여 URI를 구한다
 		String url = request.getRequestURI();
@@ -93,12 +93,15 @@ public class BoardController {
 	
 	// 수정 처리
 	@PostMapping("/modify")
-	public String modify(BoardVO boardVO, RedirectAttributes rttr) {
+	public String modify(Criteria criteria, BoardVO boardVO, RedirectAttributes rttr) {
 		log.info("/modify : " + boardVO);
 		
 		if(boardService.modify(boardVO)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", "success"); // 세션에 일시적으로 저장
 		}
+		
+		// addAttribute 메소드는, GET 방식으로 파라미터를 추가한다
+		rttr.addAttribute("pageNum", criteria.getPageNum());
 		
 		return "redirect:/board/list";
 	}

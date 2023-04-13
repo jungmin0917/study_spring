@@ -1,5 +1,7 @@
 package com.example.board.domain.vo;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,4 +17,10 @@ public class Criteria {
 		this(1, 10);
 	}
 	
+	// 기존 GET방식처럼 QueryString에 넣었던 것들을, 변수화하여 사용하는 것이다.
+	public String getParams() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("").queryParam("pageNum", this.pageNum);
+		
+		return builder.toUriString();
+	}
 }
