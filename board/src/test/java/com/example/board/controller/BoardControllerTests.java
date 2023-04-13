@@ -38,7 +38,12 @@ public class BoardControllerTests {
 	// 전체 목록
 	@Test
 	public void listTest() throws Exception {
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list").param("pageNum", "1").param("amount", "10")).andReturn().getModelAndView().getModelMap());
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "1")
+				.param("amount", "10")
+				.param("type", "TC")
+				.param("keyword", "새로")
+				).andReturn().getModelAndView().getModelMap());
 	}
 	
 	// 등록 처리

@@ -28,6 +28,24 @@
 				.small-width {display: block;}
 			}
 			
+			select{
+				width:15%;
+				display:inline;
+			}
+			
+			input[name='keyword']{
+				display:inline;
+				width:60%;
+			}
+			
+			.search{
+				width:20%;
+			}
+			
+			.table-wrapper{
+				overflow-x: hidden;
+			}
+			
 		</style>
 	</head>
 	<body class="is-preload">
@@ -71,6 +89,26 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						
+						<%-- 검색 구현 --%>
+						<form action="/board/list" name="searchForm" method="GET">
+							<div class="fields">
+								<div class="field" style="text-align: center;">
+									<select name="type">
+										<option value="">검색 기준</option>
+										<option value="TCW">전체</option>
+										<option value="T">제목</option>
+										<option value="C">내용</option>
+										<option value="W">작성자</option>
+										<option value="TW">제목 + 작성자</option>
+										<option value="TC">제목 + 내용</option>
+									</select>
+									<input type="text" name="keyword">
+									<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
+									<a href="javascript:send()" class="search button primary icon solid fa-search">검색</a>
+								</div>
+							</div>
+						</form>
 						
 						<%-- 여기에 페이지 정보 구현 --%>
 						<div class="page_wrap big-width" style="text-align: center;">
