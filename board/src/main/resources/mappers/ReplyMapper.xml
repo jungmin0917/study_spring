@@ -29,6 +29,12 @@
 		SET REPLY = #{reply}, REPLIER = #{replier}, UPDATEDATE = SYSDATE
 		WHERE RNO = #{rno}
 	</update>
+	
+	<select id="selectAll" resultType="replyVO">
+		SELECT RNO, BNO, REPLY, REPLIER, REPLYDATE, UPDATEDATE
+		FROM JUNGMIN_REPLY
+		WHERE BNO = #{bno}
+	</select>
 </mapper>
 
 

@@ -1,4 +1,4 @@
-package com.example.board.mapper;
+package com.example.board.domain.dao;
 
 import java.util.stream.IntStream;
 
@@ -16,21 +16,21 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 
-public class ReplyMapperTests {
+public class ReplyDAOTests {
 	
-	// ÃÖ½Å±Û 5°³¸¦ »ç¿ëÇÏ±â À§ÇØ ¹è¿­À» »ç¿ëÇÒ °ÍÀÌ´Ù.
 	private Long[] arBno = {3094L, 3093L, 3092L, 3091L, 3090L};
 	
 	@Autowired
-	private ReplyMapper replyMapper;
+	private ReplyDAO replyDAO;
 	
 	@Test
-	public void mapperTest() {
-		log.info(replyMapper);
+	public void daoTest() {
+		log.info(replyDAO);
 	}
+
 	
 //	@Test
-//	public void insertTest() {
+//	public void registerTest() {
 //		// ÃÖ½Å °Ô½Ã±Û 5°³¿¡ ´ñ±Û 2°³¾¿ ´Þ±â
 //		
 //		// ÃÑ 10°³ ´Þ °Å´Ï±î ½ºÆ®¸²À¸·Î ¶÷´Ù½Ä ÀÌ¿ë
@@ -41,30 +41,30 @@ public class ReplyMapperTests {
 //			replyVO.setReply("´ñ±Û Å×½ºÆ® " + i);
 //			replyVO.setReplier("ÀÛ¼ºÀÚ " + i);
 //			
-//			replyMapper.insert(replyVO);
+//			replyDAO.register(replyVO);
 //		});
 //	}
 	
 //	@Test
-//	public void selectTest() {
-//		log.info(replyMapper.select(10L));
+//	public void findByRNOTest() {
+//		log.info(replyDAO.findByRNO(20L));
 //	}
 	
 //	@Test
-//	public void deleteTest() {
-//		log.info(replyMapper.delete(10L));
+//	public void removeTest() {
+//		log.info(replyDAO.remove(20L));
 //	}
 	
 //	@Test
-//	public void deleteAllTest() {
-//		log.info(replyMapper.deleteAll(3091L));
+//	public void removeAllByBNOTest() {
+//		log.info(replyDAO.removeAllByBNO(3092L));
 //	}
 	
 //	@Test
-//	public void updateTest() {
+//	public void modifyTest() {
 //		// ÀÏ´Ü ÇØ´ç reply °¡Á®¿Í¼­ ¸î°³ ¼öÁ¤ÇØ¼­ ´Ù½Ã ¾÷µ¥ÀÌÆ® ÇÏ¸é µÊ
 //		
-//		ReplyVO replyVO = replyMapper.select(9L);
+//		ReplyVO replyVO = replyDAO.findByRNO(19L);
 //		
 //		if(replyVO == null) {
 //			log.info("¾ø´Â ´ñ±ÛÀÔ´Ï´Ù");
@@ -74,24 +74,12 @@ public class ReplyMapperTests {
 //		replyVO.setReply("ÇÏÇÏÁK");
 //		replyVO.setReplier("ÅˆÈ÷ÆR");
 //		
-//		log.info(replyMapper.update(replyVO));
+//		log.info(replyDAO.modify(replyVO));
 //	}
 	
 	@Test
 	public void selectAllTest() {
-
-		replyMapper.selectAll(3094L).forEach(log::info);
+		replyDAO.selectAll(3093L).forEach(log::info);
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
