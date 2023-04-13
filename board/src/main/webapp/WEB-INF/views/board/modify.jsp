@@ -28,6 +28,8 @@
 					<div class="content">
 						<div class="form">
 							<form action="/board/modify" method="POST">
+								<input type="hidden" name="type" value="${criteria.type}">
+								<input type="hidden" name="keyword" value="${criteria.keyword}">
 								<input type="hidden" name="pageNum" value="${criteria.pageNum}">
 								<div class="fields">
 									<div class="field">

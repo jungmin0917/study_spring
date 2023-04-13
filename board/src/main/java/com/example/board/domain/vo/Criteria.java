@@ -35,7 +35,10 @@ public class Criteria {
 	
 	// 기존 GET방식처럼 QueryString에 넣었던 것들을, 변수화하여 사용하는 것이다.
 	public String getParams() {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("").queryParam("pageNum", this.pageNum);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("type", this.type)
+				.queryParam("keyword", this.keyword)
+				.queryParam("pageNum", this.pageNum);
 		
 		return builder.toUriString();
 	}

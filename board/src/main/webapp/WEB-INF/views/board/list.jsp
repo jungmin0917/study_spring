@@ -19,15 +19,6 @@
     			align-items: center;
 			}
 			
-			@media(max-width: 918px){
-				body {transform: scale(1);}
-				.writer {display: none;}
-				.regDate {display: none;}
-				.updateDate {display: none;}
-				.big-width {display: none;}
-				.small-width {display: block;}
-			}
-			
 			select{
 				width:15%;
 				display:inline;
@@ -44,6 +35,27 @@
 			
 			.table-wrapper{
 				overflow-x: hidden;
+			}
+			
+			@media(max-width: 918px){
+				body {transform: scale(1);}
+				.writer {display: none;}
+				.regDate {display: none;}
+				.updateDate {display: none;}
+				.big-width {display: none;}
+				.small-width {display: block;}
+			
+				select{
+					width:100%;
+				}
+				
+				input[name='keyword']{
+					width:100%;
+				}
+				
+				.search{
+					width:100%;
+				}
 			}
 			
 		</style>
@@ -96,14 +108,14 @@
 								<div class="field" style="text-align: center;">
 									<select name="type">
 										<option value="" ${pageDTO.criteria.type == null ? "selected" : ""}>검색 기준</option>
-										<option value="TCW">전체</option>
-										<option value="T">제목</option>
-										<option value="C">내용</option>
-										<option value="W">작성자</option>
-										<option value="TW">제목 + 작성자</option>
-										<option value="TC">제목 + 내용</option>
+										<option value="TCW" ${pageDTO.criteria.type == "TCW" ? "selected" : ""}>전체</option>
+										<option value="T" ${pageDTO.criteria.type == "T" ? "selected" : ""}>제목</option>
+										<option value="C" ${pageDTO.criteria.type == "C" ? "selected" : ""}>내용</option>
+										<option value="W" ${pageDTO.criteria.type == "W" ? "selected" : ""}>작성자</option>
+										<option value="TW" ${pageDTO.criteria.type == "TW" ? "selected" : ""}>제목 + 작성자</option>
+										<option value="TC" ${pageDTO.criteria.type == "TC" ? "selected" : ""}>제목 + 내용</option>
 									</select>
-									<input type="text" name="keyword">
+									<input type="text" name="keyword" value="${pageDTO.criteria.keyword}">
 									<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
 									<a href="javascript:send()" class="search button primary icon solid fa-search">검색</a>
 								</div>
@@ -171,6 +183,8 @@
 						
 						<%-- 위의 changePage a태그의 href 값을 가져와서 여기 hidden값에 넣어서 submit하겠다는 것 --%>
 						<form name="pageForm" action="/board/list">
+							<input type="hidden" name="type" value="${pageDTO.criteria.type}">
+							<input type="hidden" name="keyword" value="${pageDTO.criteria.keyword}">
 							<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
 						</form>
 						

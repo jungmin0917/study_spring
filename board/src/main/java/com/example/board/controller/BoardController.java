@@ -101,9 +101,12 @@ public class BoardController {
 		}
 		
 		// addAttribute 메소드는, GET 방식으로 파라미터를 추가한다
-		rttr.addAttribute("pageNum", criteria.getPageNum());
+//		rttr.addAttribute("type", criteria.getType());
+//		rttr.addAttribute("keyword", criteria.getKeyword());
+//		rttr.addAttribute("pageNum", criteria.getPageNum());
 		
-		return "redirect:/board/list";
+		// 아니면 그냥 아래처럼 미리 만들어놓은 걸로 하는 게 편할 수도 있음
+		return "redirect:/board/list" + criteria.getParams();
 	}
 	
 	// 게시글 작성 페이지
