@@ -21,6 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 어디서 Component로 삼을 class들을 읽을 것인지 -->
 	<context:component-scan base-package="com.example.board.controller" />
 	<context:component-scan base-package="com.example.board.service" />
 	<context:component-scan base-package="com.example.board.exception"/>
