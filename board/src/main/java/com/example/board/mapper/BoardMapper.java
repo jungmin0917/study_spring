@@ -14,5 +14,5 @@ public interface BoardMapper {
 	public BoardVO read(Long bno); // 게시글 1개 가져오기
 	public int delete(Long bno); // 게시글 삭제
 	public int update(BoardVO board); // 게시글 수정
-	public int getTotal(); // 게시글 전체 개수 가져오기
+	public int getTotal(Criteria criteria); // 게시글 전체 개수 가져오기
 }

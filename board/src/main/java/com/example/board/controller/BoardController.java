@@ -45,7 +45,7 @@ public class BoardController {
 		model.addAttribute("boardList", boardService.getList(criteria));
 		
 		// PageDTO 按眉(其捞隆 包访 按眉)档 逞变促
-		model.addAttribute("pageDTO", new PageDTO(criteria, boardService.getTotal()));
+		model.addAttribute("pageDTO", new PageDTO(criteria, boardService.getTotal(criteria)));
 	}
 	
 	// 殿废 贸府

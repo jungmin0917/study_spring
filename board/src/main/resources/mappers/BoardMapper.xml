@@ -76,7 +76,9 @@
 		SELECT COUNT(BNO) FROM JUNGMIN_BOARD
 <!-- 	where태그 안에 실제로 값이 있을 때만 앞에 WHERE가 붙음 -->
 		<where>
-			<include refid="search"/>
+			<trim suffixOverrides="AND">
+				<include refid="search"/>
+			</trim>
 		</where>
 	</select>
 </mapper>

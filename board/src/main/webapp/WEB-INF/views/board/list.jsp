@@ -95,7 +95,7 @@
 							<div class="fields">
 								<div class="field" style="text-align: center;">
 									<select name="type">
-										<option value="">검색 기준</option>
+										<option value="" ${pageDTO.criteria.type == null ? "selected" : ""}>검색 기준</option>
 										<option value="TCW">전체</option>
 										<option value="T">제목</option>
 										<option value="C">내용</option>
@@ -188,6 +188,7 @@
 	<script src="/resources/assets/js/main.js"></script>
 	
 	<script type="text/javascript">
+	
 		// 페이지 이동 스크립트
 		$("body").on("click", "a.changePage", function(e){
 			e.preventDefault(); // 기존 이벤트 막음
@@ -201,7 +202,21 @@
 			$form.submit();
 		});
 		
-		
+		function send(){
+			let $form = $(document.searchForm);
+			
+			if(!$form.find("select option:selected").val()){
+				alert("검색 종류를 선택해주세요");
+				return;
+			}
+			
+			if(!$form.find("input[name='keyword']").val()){
+				alert("검색어를 입력해주세요");
+				return;
+			}
+			
+			$form.submit();
+		}
 		
 		
 	</script>

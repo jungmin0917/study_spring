@@ -45,6 +45,10 @@ public class PageDTO {
 		// endPage에서 amount만큼 빼고 거기에 1을 더하면 현재 페이지 구간의 startPage를 구할 수 있음
 		this.startPage = endPage - criteria.getAmount() + 1;
 		
+		if(startPage < 1) {
+			startPage = 1;
+		}
+		
 		// 현재 페이지 구간의 시작 페이지(startPage)가 1보다 크면 이전 구간이 있다는 뜻
 		this.prev = this.startPage > 1;
 		
