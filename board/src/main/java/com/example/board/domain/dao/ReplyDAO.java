@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class ReplyDAO {
 	
 	@Autowired
-	private ReplyMapper replyMapper;
+	private final ReplyMapper replyMapper;
 	
 	// 댓글 생성
 	public boolean register(ReplyVO replyVO) {
@@ -45,7 +45,7 @@ public class ReplyDAO {
 	}
 
 	// 댓글 전체 조회 (게시글 번호로 조회)
-	public List<ReplyVO> selectAll(Long bno){
+	public List<ReplyVO> findAllByBNO(Long bno){
 		return replyMapper.selectAll(bno);
 	}
 }

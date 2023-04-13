@@ -1,4 +1,4 @@
-package com.example.board.domain.dao;
+package com.example.board.service;
 
 import java.util.stream.IntStream;
 
@@ -16,19 +16,19 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 
-public class ReplyDAOTests {
+public class ReplyServiceTests {
 	
+	// ÃÖ½Å±Û 5°³¸¦ »ç¿ëÇÏ±â À§ÇØ ¹è¿­À» »ç¿ëÇÒ °ÍÀÌ´Ù.
 	private Long[] arBno = {3094L, 3093L, 3092L, 3091L, 3090L};
 	
 	@Autowired
-	private ReplyDAO replyDAO;
-	
-	@Test
-	public void daoTest() {
-		log.info(replyDAO);
-	}
+	private ReplyService replyService;
 
-	
+//	@Test
+//	public void serviceTest() {
+//		log.info(replyService);
+//	}
+
 //	@Test
 //	public void registerTest() {
 //		// ÃÖ½Å °Ô½Ã±Û 5°³¿¡ ´ñ±Û 2°³¾¿ ´Þ±â
@@ -41,30 +41,30 @@ public class ReplyDAOTests {
 //			replyVO.setReply("´ñ±Û Å×½ºÆ® " + i);
 //			replyVO.setReplier("ÀÛ¼ºÀÚ " + i);
 //			
-//			replyDAO.register(replyVO);
+//			replyService.register(replyVO);
 //		});
 //	}
 	
 //	@Test
 //	public void findByRNOTest() {
-//		log.info(replyDAO.findByRNO(20L));
+//		log.info(replyService.findByRNO(30L));
 //	}
 	
 //	@Test
 //	public void removeTest() {
-//		log.info(replyDAO.remove(20L));
+//		log.info(replyService.remove(30L));
 //	}
 	
 //	@Test
 //	public void removeAllByBNOTest() {
-//		log.info(replyDAO.removeAllByBNO(3092L));
+//		log.info(replyService.removeAllByBNO(3091L));
 //	}
 	
 //	@Test
 //	public void modifyTest() {
 //		// ÀÏ´Ü ÇØ´ç reply °¡Á®¿Í¼­ ¸î°³ ¼öÁ¤ÇØ¼­ ´Ù½Ã ¾÷µ¥ÀÌÆ® ÇÏ¸é µÊ
 //		
-//		ReplyVO replyVO = replyDAO.findByRNO(19L);
+//		ReplyVO replyVO = replyService.findByRNO(28L);
 //		
 //		if(replyVO == null) {
 //			log.info("¾ø´Â ´ñ±ÛÀÔ´Ï´Ù");
@@ -74,12 +74,11 @@ public class ReplyDAOTests {
 //		replyVO.setReply("ÇÏÇÏÁK");
 //		replyVO.setReplier("ÅˆÈ÷ÆR");
 //		
-//		log.info(replyDAO.modify(replyVO));
+//		log.info(replyService.modify(replyVO));
 //	}
 	
 	@Test
 	public void findAllByBNOTest() {
-		replyDAO.findAllByBNO(3093L).forEach(log::info);
+		replyService.findAllByBNO(3094L).forEach(log::info);
 	}
-	
 }
