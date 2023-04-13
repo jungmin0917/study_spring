@@ -8,4 +8,7 @@ import com.example.board.domain.vo.ReplyVO;
 public interface ReplyMapper {
 	public int insert(ReplyVO replyVO);
 	public ReplyVO select(Long rno);
+	public int delete(Long rno);
+	public int deleteAll(Long bno);
+	public int update(ReplyVO replyVO);
 }

@@ -13,6 +13,22 @@
 		FROM JUNGMIN_REPLY
 		WHERE RNO = #{rno}
 	</select>
+	
+	<delete id="delete">
+		DELETE FROM JUNGMIN_REPLY
+		WHERE RNO = #{rno}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM JUNGMIN_REPLY
+		WHERE BNO = #{bno}
+	</delete>
+	
+	<update id="update">
+		UPDATE JUNGMIN_REPLY
+		SET REPLY = #{reply}, REPLIER = #{replier}, UPDATEDATE = SYSDATE
+		WHERE RNO = #{rno}
+	</update>
 </mapper>
 
 

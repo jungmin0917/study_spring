@@ -45,10 +45,38 @@ public class ReplyMapperTests {
 //		});
 //	}
 	
+//	@Test
+//	public void selectTest() {
+//		log.info(replyMapper.select(10L));
+//	}
+	
+//	@Test
+//	public void deleteTest() {
+//		log.info(replyMapper.delete(10L));
+//	}
+	
+//	@Test
+//	public void deleteAllTest() {
+//		log.info(replyMapper.deleteAll(3091L));
+//	}
+	
 	@Test
-	public void selectTest() {
-		log.info(replyMapper.select(10L));
+	public void updateTest() {
+		// ÀÏ´Ü ÇØ´ç reply °¡Á®¿Í¼­ ¸î°³ ¼öÁ¤ÇØ¼­ ´Ù½Ã ¾÷µ¥ÀÌÆ® ÇÏ¸é µÊ
+		
+		ReplyVO replyVO = replyMapper.select(9L);
+		
+		if(replyVO == null) {
+			log.info("¾ø´Â ´ñ±ÛÀÔ´Ï´Ù");
+			return;
+		}
+		
+		replyVO.setReply("ÇÏÇÏÁK");
+		replyVO.setReplier("ÅˆÈ÷ÆR");
+		
+		log.info(replyMapper.update(replyVO));
 	}
+	
 }
 
 
