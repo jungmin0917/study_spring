@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.example.board.domain.vo.Criteria;
 import com.example.board.domain.vo.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
@@ -80,7 +81,7 @@ public class ReplyMapperTests {
 	@Test
 	public void selectAllTest() {
 
-		replyMapper.selectAll(3094L).forEach(log::info);
+		replyMapper.selectAll(new Criteria(2, 10), 3094L).forEach(log::info);
 	}
 	
 }

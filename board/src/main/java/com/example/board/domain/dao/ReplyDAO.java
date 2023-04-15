@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.board.domain.vo.Criteria;
 import com.example.board.domain.vo.ReplyVO;
 import com.example.board.mapper.ReplyMapper;
 
@@ -45,8 +46,8 @@ public class ReplyDAO {
 	}
 
 	// 댓글 전체 조회 (게시글 번호로 조회)
-	public List<ReplyVO> findAllByBNO(Long bno){
-		return replyMapper.selectAll(bno);
+	public List<ReplyVO> findAllByBNO(Criteria criteria, Long bno){
+		return replyMapper.selectAll(criteria, bno);
 	}
 }
 

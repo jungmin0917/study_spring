@@ -41,11 +41,13 @@ let replyService = (function(){
 	}
 	
 	// 목록 보기
+	// param은 게시글 번호와 요청한 페이지를 받아올 수 있는 객체이다.
 	function getList(param, callback, error){ // bno(게시글 번호)와 page(페이징 처리 할 것임)가 필요한데 이걸 한 번에 객체로 받을 것임
 		console.log("getList......");
 	
 		let bno = param.bno;
-		let page = param.page || 1;
+		// let variable = a || b; ---> a가 값이 없거나 false인 경우, variable에 b가 할당된다.
+		let page = param.page || 1;  
 		
 		// 좀 더 편한 문법으로 가져오자
 		// 주의 : get은 가져온다는 뜻이 아니고 GET 방식으로 요청한다는 뜻의 get이다! (그렇다고 $.postJSON이 존재하지는 않는다..)

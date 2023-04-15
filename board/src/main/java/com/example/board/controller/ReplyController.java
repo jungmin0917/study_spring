@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.board.domain.vo.Criteria;
 import com.example.board.domain.vo.ReplyVO;
 import com.example.board.service.ReplyService;
 
@@ -40,7 +41,7 @@ public class ReplyController {
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") Long bno, @PathVariable("page") int page) { // URL경로의 bno값을 파라미터 bno와 매핑시켜줌
 		log.info("getList ...... " + bno);
 
-		return new ResponseEntity<List<ReplyVO>>(replyService.findAllByBNO(bno), HttpStatus.OK);
+		return new ResponseEntity<List<ReplyVO>>(replyService.findAllByBNO(new Criteria(page, 10), bno), HttpStatus.OK);
 	}
 	
 	// 댓글 1개 조회
