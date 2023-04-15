@@ -32,8 +32,19 @@
 	
 	<select id="selectAll" resultType="replyVO">
 		SELECT RNO, BNO, REPLY, REPLIER, REPLYDATE, UPDATEDATE
-		FROM JUNGMIN_REPLY
-		WHERE BNO = #{bno}
+		FROM
+		(
+			SELECT /*+ INDEX_DESC(JUNGMIN_REPLY, PK_REPLY) */
+			ROWNUM RN, RNO, BNO, REPLY, REPLIER, REPLYDATE, UPDATEDATE
+			FROM JUNGMIN_REPLY
+			WHERE BNO = #{bno} AND
+			<![CDATA[
+			ROWNUM <= #{pageNum} * #{amount}
+			]]>
+		)
+		<![CDATA[
+		WHERE RN > (#{pageNum} - 1) * #{amount}
+		]]>
 	</select>
 </mapper>
 

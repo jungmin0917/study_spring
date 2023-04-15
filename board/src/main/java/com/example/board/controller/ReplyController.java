@@ -36,7 +36,7 @@ public class ReplyController {
 	}
 	
 	// 게시글 댓글 전체 조회
-	@GetMapping(value = "/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE}) // produces를 두 가지 방식으로 설정했다. 기본값은 XML 방식이다.
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") Long bno, @PathVariable("page") int page) { // URL경로의 bno값을 파라미터 bno와 매핑시켜줌
 		log.info("getList ...... " + bno);
 

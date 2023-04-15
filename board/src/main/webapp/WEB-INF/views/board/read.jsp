@@ -75,11 +75,16 @@
 		
 		let reply = {bno: bno, reply: "모듈화 테스트", replier: "황정민"}; // 자바스크립트 객체 선언
 	
-		replyService.add(reply, function(result){
-			console.log(result);
-		});
+// 		replyService.add(reply, function(result){
+// 			console.log(result);
+// 		});
 		
-		console.log(testService);
+
+		let param = {bno: bno}; // page는 기본값으로 사용할 예정	
+		
+		replyService.getList(param, function(list){
+			console.log(list);
+		});
 	</script>
 </html>
 
