@@ -18,6 +18,7 @@ console.log("reply Module ...... ");
 // 즉시 실행 함수 (IIFE, Immediately-Invoked Function Expression)을 사용하여
 // replyService라는 변수에 모듈을 담는 코드
 let replyService = (function(){
+
 	// 추가하기
 	function add(reply, callback){ // callback 함수는 이제 뭐냐면 ajax가 성공했을 때 이후에 할 일을 또 따로 모듈화하는 것이다.
 		console.log("add reply......");
@@ -25,7 +26,7 @@ let replyService = (function(){
 		$.ajax({
 			url: "/replies/new",
 			type: "POST", // HTTP 요청 방식
-			data: JSON.stringify(reply),
+			data: JSON.stringify(reply), // 반드시 JSON 형태로 바꿔야 됨!
 			contentType: "application/json; charset=utf-8", // 보낼 데이터 유형
 			dataType: "text", // 받을 데이터 유형
 			success: function(res){
@@ -64,9 +65,74 @@ let replyService = (function(){
 		});
 	}
 	
+	// 댓글 삭제
+	function remove(rno, callback){
+		console.log("remove....... ");
+		
+		$.ajax({
+			url: "/replies/" + rno,
+			type: "DELETE",
+			dataType: "text",
+			success: function(res){
+				if(callback){
+					callback(res);
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+		});
+	}
+	
+	// 댓글 수정
+	function modify(reply, callback){
+		let rno = reply.rno;
+		
+		$.ajax({
+			url: "/replies/" + reply.rno,
+			type: "PUT",
+			data: JSON.stringify(reply),
+			contentType: "application/json; charset=utf-8",
+			dataType: "text",
+			success: function(res){
+				if(callback){
+					callback(res);
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+		});
+	}
+	
+	// 댓글 1개 조회
+	function getReply(rno, callback){
+		$.ajax({
+			url: "/replies/" + rno,
+			type: "GET",
+			// dataType: "JSON", // 어차피 JSON으로 받아와져서 이건 안 적어도 됨
+			success: function(res){
+				if(callback){
+					callback(res);
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+		});
+	}
+	
 	// 키값: 값 형태
-	return {add: add, getList: getList};
+	return {add: add, getList: getList, remove: remove, modify: modify, getReply: getReply};
 })();
 
 let testService = (function(){return "ABC";})();
+
+
+
+
+
+
+
+
 

@@ -66,12 +66,15 @@
 	<script src="/resources/assets/js/breakpoints.min.js"></script>
 	<script src="/resources/assets/js/util.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+	
+<!-- ajax 부분은 분리를 해서 모듈화해줌 -->
 	<script src="/resources/assets/js/reply.js"></script>
 	
+<!-- 여기서 script 부분에 적을 것은, ajax로 반환받은 값으로 화면에 어떻게 처리해줄지임 -->
 	<script type="text/javascript">
-		console.log("===JS TEST===");
+// 		console.log("===JS TEST===");
 		
-		let bno = "${board.bno}";
+// 		let bno = "${board.bno}";
 		
 // 		let reply = {bno: bno, reply: "모듈화 테스트", replier: "황정민"}; // 자바스크립트 객체 선언
 	
@@ -85,7 +88,24 @@
 // 		replyService.getList(param, function(list){
 // 			console.log(list);
 // 		});
+
+// 		let rno = 47;
+
+// 		replyService.remove(rno, function(result){
+// 			alert(result);
+// 		});
+
+// 		let reply = {rno: 45, reply: "수정테스트~", replier: "수정테스트~"};
 		
+// 		replyService.modify(reply, function(result){
+// 			alert(result);
+// 		});
+		
+// 		let rno = 45;
+		
+// 		replyService.getReply(rno, function(result){
+// 			console.log(result);
+// 		});
 		
 	</script>
 </html>
