@@ -66,4 +66,34 @@
 	<script src="/resources/assets/js/breakpoints.min.js"></script>
 	<script src="/resources/assets/js/util.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+	<script src="/resources/assets/js/reply.js"></script>
+	
+	<script type="text/javascript">
+		console.log("===JS TEST===");
+		
+		let bno = "${board.bno}";
+		
+		let reply = {bno: bno, reply: "모듈화 테스트", replier: "황정민"}; // 자바스크립트 객체 선언
+	
+		replyService.add(reply, function(result){
+			console.log(result);
+		});
+		
+		console.log(testService);
+	</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

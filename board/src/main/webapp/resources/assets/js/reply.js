@@ -12,11 +12,37 @@
 
 console.log("reply Module ...... ");
 
+// 아래 개발 방식은, 댓글에 대한 각 ajax를 캡슐화하여 replyService라는 자바스크립트 객체에 키-값 형태로 메소드들을 담는 것이다.
+// 그리고 그 메소드에 넣은 값도 객체화 (reply라는 변수, callback이라는 이후 실행할 함수)하여 최대한 이후 유지보수가 편하도록 개발한 것이다.
+
 // 즉시 실행 함수 (IIFE, Immediately-Invoked Function Expression)을 사용하여
 // replyService라는 변수에 모듈을 담는 코드
 let replyService = (function(){
 	// 추가하기
-	function register(){}
+	function add(reply, callback){ // callback 함수는 이제 뭐냐면 ajax가 성공했을 때 이후에 할 일을 또 따로 모듈화하는 것이다.
+		console.log("add reply......");
+		
+		$.ajax({
+			url: "/replies/new",
+			type: "POST", // HTTP 요청 방식
+			data: JSON.stringify(reply),
+			contentType: "application/json; charset=utf-8", // 보낼 데이터 유형
+			dataType: "text", // 받을 데이터 유형
+			success: function(res){
+				if(callback){ // 받은 콜백함수가 존재할 때
+					callback(res);
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+		
+		});
+	}
 	
-	return {register: register}
+	// 키값: 값 형태
+	return {add: add};
 })();
+
+let testService = (function(){return "ABC";})();
+
