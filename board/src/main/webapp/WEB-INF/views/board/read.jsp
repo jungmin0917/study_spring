@@ -144,6 +144,9 @@
 							<strong>` + list[i].replier + `</strong>
 							<p>` + list[i].reply + `</p>
 							<strong style="display: block; text-align: right">` + ((list[i].replyDate != list[i].updateDate) ? "* " : "") + replyService.displayTime(date) + `</strong>
+							
+							<a href=` + list[i].rno + ` class="modifyReady">수정</a>
+							<a href=` + list[i].rno + ` class="modifyFinish">수정완료</a>
 							<div class="line"></div>
 							</li>`;
 				}
