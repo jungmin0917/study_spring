@@ -122,8 +122,35 @@ let replyService = (function(){
 		});
 	}
 	
-	// 키값: 값 형태
-	return {add: add, getList: getList, remove: remove, modify: modify, getReply: getReply};
+	// 댓글 작성 시간 정제 함수
+	// 댓글 작성 시간을 기준으로 24시간 이후는 년-월-일
+	// 24시간 이전은 시:분:초로 만들기
+	function displayTime(timeValue){ // 댓글 작성 시간을 여기에 넘겨줄 것임
+		let today = new Date(); // 정확히 현재 시간으로 Date 객체 만듦
+		let date = new Date(timeValue); // 넘겨준 댓글 작성 시간으로 date 객체 만든다.
+		
+		// getTime() : 해당 Date 객체 시간을 밀리초로 반환함
+		let gap = today.getTime() - date.getTime(); // 현재 시간에서 댓글 작성 시간을 뺌
+		
+		if(gap < 1000 * 60 * 60 * 24){ // 작성한지 24시간 미만인지
+			// 시:분:초로 만들기
+			let hh = date.getHours();
+			let mm = date.getMinutes();
+			let ss = date.getSeconds();
+			
+			return [hh < 10 ? "0" + hh : hh, mm < 10 ? "0" + mm : mm, ss < 10 ? "0" + ss : ss].join(":");
+		}else{
+			// 연-월-일로 만들기
+			let yy = date.getFullYear();
+			let mm = date.getMonth() + 1;
+			let dd = date.getDate();
+			
+			return [yy, mm < 10 ? "0" + mm : mm, dd < 10 ? "0" + dd : dd].join("-");
+		}
+	}
+	
+	// replyService 객체에 해당 메소드를 키-값 형태로 넣는다.
+	return {add: add, getList: getList, remove: remove, modify: modify, getReply: getReply, displayTime: displayTime};
 })();
 
 let testService = (function(){return "ABC";})();

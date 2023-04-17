@@ -109,12 +109,23 @@
 				// 댓글 목록을 받아옴.
 				// 반복을 돌리면서 DOM에 넣어준다
 				
+				console.log(list);
+				
+				// 댓글 작성 후 24시간이 지났으면 년월일
+				// 지나지 않았으면 시분초로 표현하기
+				// 자바스크립트 Date 객체로 시간을 정제하자
+				
 				let str = ""; // DOM에 넣을 텍스트
+				let date = "";
 				for(i=0; i < list.length; i++){
+
+					// 수정한 댓글이면 updateDate 쓰고, 아니면 replyDate 사용함
+					date = (list[i].replyDate == list[i].updateDate) ? list[i].replyDate : list[i].updateDate;
+					
 					str += `<li style="display: block;">
 							<strong>` + list[i].replier + `</strong>
 							<p>` + list[i].reply + `</p>
-							<strong style="display: block; text-align: right">` + list[i].replyDate + `</strong>
+							<strong style="display: block; text-align: right">` + ((list[i].replyDate != list[i].updateDate) ? "* " : "") + replyService.displayTime(date) + `</strong>
 							<div class="line"></div>
 							</li>`;
 				}
