@@ -13,6 +13,9 @@
 			div.line{
 				border-bottom: 1px solid #ff8b77;
 			}
+			h4.reply-h4{
+				margin-bottom: 0;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -56,7 +59,7 @@
 									</li>
 								</ul>
 								
-								<ul class="icons">
+								<ul class="icons" style="margin: 0; margin-bottom: 10px;">
 									<li>
 										<span class="icon solid fa-envelope"></span>
 										<strong>댓글</strong>
@@ -68,6 +71,23 @@
 <!-- 										<div class="line"></div> -->
 <!-- 									</li> -->
 								</ul>
+								
+								<%-- 댓글 등록 누르면 나오게 하고 취소하면 없앨 거임 (댓글 div를) --%>
+								<a href="javascript:;" class="button primary small register" style="display: block; margin-bottom: 50px">댓글 등록</a>
+								<div class="fields register-form" style="display: none;">
+									<div class="field">
+										<h4 class="reply-h4">작성자</h4>
+										<input type="text" name="replier" placeholder="replier">
+									</div>
+									<div class="field">
+										<h4 class="reply-h4">댓글</h4>
+										<textarea name="reply" rows="6" placeholder="reply" style="resize: none;"></textarea>
+									</div>
+									<div class="field registerButtons" style="text-align: right;">
+										<a href="javascript:;" class="button primary small finish">등록</a>
+										<a href="javascript:;" class="button primary small cancel">취소</a>
+									</div>
+								</div>
 								
 								<%-- 자바스크립트 쪽에서 만들어둔 ajax로 DOM을 여기다 뿌리자 --%>
 								<ul class="replies"></ul>
@@ -109,8 +129,6 @@
 				// 댓글 목록을 받아옴.
 				// 반복을 돌리면서 DOM에 넣어준다
 				
-				console.log(list);
-				
 				// 댓글 작성 후 24시간이 지났으면 년월일
 				// 지나지 않았으면 시분초로 표현하기
 				// 자바스크립트 Date 객체로 시간을 정제하자
@@ -133,6 +151,35 @@
 				repliesUL.html(str);
 			});
 		}
+		
+		// 댓글 최종 등록 눌렀을 때
+		$("body").on("click", "a.finish", function(){
+			// reply 객체를 넘겨야 함
+			let reply = {
+				bno: bno, 
+				reply: $(".register-form textarea[name='reply']").val(), 
+				replier: $(".register-form input[name='replier']").val()
+			};
+		
+			replyService.add(reply, function(){
+				// 성공했으면 showList 메소드를 호출해준다
+				$(".register-form textarea[name='reply']").val("");
+				$(".register-form input[name='replier']").val("");
+				showList();
+			});
+		});
+		
+		// 댓글 등록 버튼 눌렀을 때
+		$("body").on("click", "a.register", function(){
+			$("div.register-form").show();
+			$(this).hide();
+		});
+		
+		// 댓글 취소 버튼 눌렀을 때
+		$("body").on("click", "a.cancel", function(){
+			$("div.register-form").hide();
+			$("a.register").show();
+		});
 	
 // 		console.log("===JS TEST===");
 		
