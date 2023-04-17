@@ -28,6 +28,10 @@
 			.reply_buttons .remove{
 				margin-left: 10px;
 			}
+			
+			.reply_buttons .modify-cancel{
+				margin-left: 10px;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -204,12 +208,18 @@
 		// 댓글 수정 버튼 눌렀을 때
 		$("body").on("click", "a.modify-ready", function(e){
 			e.preventDefault();
+			
 			if(modifyCheck){
 				alert("이미 수정 중인 댓글이 있습니다");
 				return;
 			}else{
 				modifyCheck = true;
 			}
+
+			const remove = $(this).closest("li").find(".remove");
+			
+			remove.attr("class", "modify-cancel");
+			remove.text("취소");
 			
 			$(this).hide();
 			$(this).closest("li").find("a.modify-finish").show();
@@ -233,6 +243,34 @@
 			
 			replyService.modify(reply, function(){
 				console.log("수정 완료");
+				showList();
+			});
+			
+			modifyCheck = false;
+		});
+		
+		// 댓글 수정 취소 버튼 눌렀을 때
+		$("body").on("click", "a.modify-cancel", function(e){
+			e.preventDefault();
+
+			modifyCheck = false;
+			showList();
+		});
+		
+		// 댓글 삭제 버튼 눌렀을 때
+		$("body").on("click", "a.remove", function(e){
+			e.preventDefault();
+			
+			let conf = confirm("정말 삭제하시겠습니까?");
+			
+			if(!conf){
+				return;
+			}
+			
+			let rno = $(this).attr("href");
+			
+			replyService.remove(rno, function(){
+				console.log("삭제 완료");
 				showList();
 			});
 			
