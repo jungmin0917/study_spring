@@ -10,6 +10,9 @@
 		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 		<style>
 			body {transform: scale(0.8); margin-top: -50px; overflow-x: hidden;}
+			div.line{
+				border-bottom: 1px solid #ff8b77;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -52,6 +55,22 @@
 										<input type="submit" class="button" value="삭제"/>
 									</li>
 								</ul>
+								
+								<ul class="icons">
+									<li>
+										<span class="icon solid fa-envelope"></span>
+										<strong>댓글</strong>
+									</li>
+<!-- 									<li style="display: block;"> -->
+<!-- 										<strong>작성자</strong> -->
+<!-- 										<p>댓글 내용</p> -->
+<!-- 										<strong>작성 시간</strong> -->
+<!-- 										<div class="line"></div> -->
+<!-- 									</li> -->
+								</ul>
+								
+								<%-- 자바스크립트 쪽에서 만들어둔 ajax로 DOM을 여기다 뿌리자 --%>
+								<ul class="replies"></ul>
 							</form>
 						</div>
 					</div>
@@ -72,6 +91,38 @@
 	
 <!-- 여기서 script 부분에 적을 것은, ajax로 반환받은 값으로 화면에 어떻게 처리해줄지임 -->
 	<script type="text/javascript">
+
+		let bno = "${board.bno}";
+		let page = 1;
+		
+		const repliesUL = $("ul.replies");
+		
+// 		replyService.getList({bno: bno, page: page}, function(list){
+// 			console.log(list);
+// 		});
+		
+		showList(page); // 아래의 showList를 DOM이 로드되면 바로 실행한다.
+		
+		function showList(){
+			let param = {bno: bno, page: page};
+			replyService.getList(param, function(list){
+				// 댓글 목록을 받아옴.
+				// 반복을 돌리면서 DOM에 넣어준다
+				
+				let str = ""; // DOM에 넣을 텍스트
+				for(i=0; i < list.length; i++){
+					str += `<li style="display: block;">
+							<strong>` + list[i].replier + `</strong>
+							<p>` + list[i].reply + `</p>
+							<strong style="display: block; text-align: right">` + list[i].replyDate + `</strong>
+							<div class="line"></div>
+							</li>`;
+				}
+				
+				repliesUL.html(str);
+			});
+		}
+	
 // 		console.log("===JS TEST===");
 		
 // 		let bno = "${board.bno}";
