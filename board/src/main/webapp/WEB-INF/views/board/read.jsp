@@ -152,7 +152,7 @@
 					// 수정한 댓글이면 updateDate 쓰고, 아니면 replyDate 사용함
 					date = (list[i].replyDate == list[i].updateDate) ? list[i].replyDate : list[i].updateDate;
 					
-					str += `<li style="display: block;">
+					str += `<li id=` + list[i].rno + ` style="display: block;">
 							<div class="reply_top">
 								<strong class="replier">` + list[i].replier + `</strong>
 								<div class="reply_buttons">
@@ -194,6 +194,7 @@
 			$(this).hide();
 		});
 		
+		let modifyCheck = false; // 현재 수정 중인지 체크
 		// 댓글 취소 버튼 눌렀을 때
 		$("body").on("click", "a.cancel", function(){
 			$("div.register-form").hide();
@@ -203,8 +204,39 @@
 		// 댓글 수정 버튼 눌렀을 때
 		$("body").on("click", "a.modify-ready", function(e){
 			e.preventDefault();
+			if(modifyCheck){
+				alert("이미 수정 중인 댓글이 있습니다");
+				return;
+			}else{
+				modifyCheck = true;
+			}
+			
 			$(this).hide();
 			$(this).closest("li").find("a.modify-finish").show();
+
+			let rno = $(this).attr("href");
+			const p = $(".replies li#" + rno).find("p." + rno); // 기존 댓글 내용
+			
+			p.html("<textarea class=" + rno + " style='resize: none;'>" + p.text() + "</textarea>");
+		});
+		
+		// 댓글 수정 완료 버튼 눌렀을 때
+		$("body").on("click", "a.modify-finish", function(e){
+			e.preventDefault();
+			
+			let rno = $(this).attr("href");
+			
+			let reply = {
+				rno: rno,
+				reply: $("textarea." + rno).val()
+			};
+			
+			replyService.modify(reply, function(){
+				console.log("수정 완료");
+				showList();
+			});
+			
+			modifyCheck = false;
 		});
 	
 // 		console.log("===JS TEST===");
