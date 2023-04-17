@@ -16,6 +16,18 @@
 			h4.reply-h4{
 				margin-bottom: 0;
 			}
+			.reply_top{
+			    display: flex;
+			    justify-content: space-between;
+			}
+			
+			.replies li{
+				margin-bottom: 10px;
+			}
+			
+			.reply_buttons .remove{
+				margin-left: 10px;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -141,12 +153,16 @@
 					date = (list[i].replyDate == list[i].updateDate) ? list[i].replyDate : list[i].updateDate;
 					
 					str += `<li style="display: block;">
-							<strong>` + list[i].replier + `</strong>
-							<p>` + list[i].reply + `</p>
-							<strong style="display: block; text-align: right">` + ((list[i].replyDate != list[i].updateDate) ? "* " : "") + replyService.displayTime(date) + `</strong>
-							
-							<a href=` + list[i].rno + ` class="modifyReady">수정</a>
-							<a href=` + list[i].rno + ` class="modifyFinish">수정완료</a>
+							<div class="reply_top">
+								<strong class="replier">` + list[i].replier + `</strong>
+								<div class="reply_buttons">
+									<a href=` + list[i].rno + ` class="modify-ready">수정</a>
+									<a href=` + list[i].rno + ` class="modify-finish" style="display: none;">수정완료</a>
+									<a href=` + list[i].rno + ` class="remove">삭제</a>
+								</div>
+							</div>
+							<p class=` + list[i].rno + `>` + list[i].reply + `</p>
+							<strong style="display: block; text-align: right; margin-bottom: 10px;">` + ((list[i].replyDate != list[i].updateDate) ? "* " : "") + replyService.displayTime(date) + `</strong>
 							<div class="line"></div>
 							</li>`;
 				}
@@ -182,6 +198,13 @@
 		$("body").on("click", "a.cancel", function(){
 			$("div.register-form").hide();
 			$("a.register").show();
+		});
+		
+		// 댓글 수정 버튼 눌렀을 때
+		$("body").on("click", "a.modify-ready", function(e){
+			e.preventDefault();
+			$(this).hide();
+			$(this).closest("li").find("a.modify-finish").show();
 		});
 	
 // 		console.log("===JS TEST===");
