@@ -49,6 +49,11 @@ public class ReplyDAO {
 	public List<ReplyVO> findAllByBNO(Criteria criteria, Long bno){
 		return replyMapper.selectAll(criteria, bno);
 	}
+	
+	// 해당 게시글에서의 댓글 전체 개수
+	public int getTotal(Long bno) {
+		return replyMapper.getTotal(bno);
+	}
 }
 
 

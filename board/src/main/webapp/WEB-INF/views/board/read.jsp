@@ -108,6 +108,8 @@
 								<%-- 자바스크립트 쪽에서 만들어둔 ajax로 DOM을 여기다 뿌리자 --%>
 								<ul class="replies"></ul>
 							</form>
+							
+							<div class="paging" style="text-align:center;"></div>
 						</div>
 					</div>
 				</div>
@@ -130,6 +132,7 @@
 
 		let bno = "${board.bno}";
 		let page = 1;
+		let modifyCheck = false; // 현재 수정 중인지 체크
 		
 		const repliesUL = $("ul.replies");
 		
@@ -139,9 +142,55 @@
 		
 		showList(page); // 아래의 showList를 DOM이 로드되면 바로 실행한다.
 		
-		function showList(){
+		function showReplyPage(total){
+			// 기존 pageDTO에서 하던 연산을 여기서 할 것 
+			let endNum; // 현재 페이지 구간 마지막 페이지
+			let startNum; // 현재 페이지 구간 시작 페이지
+			let prev; // 이전 페이지 구간 존재 여부
+			let next = false; // 다음 페이지 구간 존재 여부
+			
+			endNum = Math.ceil(page / 10.0) * 10;
+			startNum = endNum - 9;
+			prev = startNum != 1; // 시작 페이지가 1이 아닐 때 true
+			
+			if(endNum * 10 >= total){
+				endNum = Math.ceil(total / 10.0);
+			}
+			
+			if(endNum * 10 < total){
+				next = true;
+			}
+			
+			str = "";
+			
+			if(prev){
+				str += `<a class="changePage" href=` + (startNum - 1) + `>
+							<code>&lt;</code>
+						</a>`
+			}
+			
+			for (let i = startNum; i <= endNum; i++) {
+				if(page == i){
+					str += `<code>` + i + `</code>`;
+				}else{
+					str += `<a class="changePage" href=` + i + `>
+								<code>` + i + `</code>
+							</a>`
+				}
+			}
+			
+			if(next){
+				str += `<a class="changePage" href=` + (endNum + 1) + `>
+							<code>&gt;</code>
+						</a>`
+			}
+			
+			$("div.paging").html(str);
+		}
+		
+		function showList(page){
 			let param = {bno: bno, page: page};
-			replyService.getList(param, function(list){
+			replyService.getList(param, function(result){
 				// 댓글 목록을 받아옴.
 				// 반복을 돌리면서 DOM에 넣어준다
 				
@@ -149,6 +198,8 @@
 				// 지나지 않았으면 시분초로 표현하기
 				// 자바스크립트 Date 객체로 시간을 정제하자
 				
+				let list = result.list;
+				let total = result.total;
 				let str = ""; // DOM에 넣을 텍스트
 				let date = "";
 				for(i=0; i < list.length; i++){
@@ -171,9 +222,17 @@
 							</li>`;
 				}
 				
-				repliesUL.html(str);
+				repliesUL.html(str); // 댓글 ul에 DOM 채우기
+				showReplyPage(total); // 댓글 페이징 보여주기
 			});
 		}
+		
+		$("body").on("click", "a.changePage", function(e){
+			e.preventDefault();
+			page = $(this).attr("href");
+			showList(page);
+			modifyCheck = false;
+		});
 		
 		// 댓글 최종 등록 눌렀을 때
 		$("body").on("click", "a.finish", function(){
@@ -188,7 +247,7 @@
 				// 성공했으면 showList 메소드를 호출해준다
 				$(".register-form textarea[name='reply']").val("");
 				$(".register-form input[name='replier']").val("");
-				showList();
+				showList(page);
 			});
 		});
 		
@@ -198,7 +257,6 @@
 			$(this).hide();
 		});
 		
-		let modifyCheck = false; // 현재 수정 중인지 체크
 		// 댓글 취소 버튼 눌렀을 때
 		$("body").on("click", "a.cancel", function(){
 			$("div.register-form").hide();
@@ -243,7 +301,7 @@
 			
 			replyService.modify(reply, function(){
 				console.log("수정 완료");
-				showList();
+				showList(page);
 			});
 			
 			modifyCheck = false;
@@ -254,7 +312,7 @@
 			e.preventDefault();
 
 			modifyCheck = false;
-			showList();
+			showList(page);
 		});
 		
 		// 댓글 삭제 버튼 눌렀을 때
@@ -271,7 +329,7 @@
 			
 			replyService.remove(rno, function(){
 				console.log("삭제 완료");
-				showList();
+				showList(page);
 			});
 			
 			modifyCheck = false;

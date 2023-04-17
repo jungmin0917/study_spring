@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.board.domain.vo.Criteria;
+import com.example.board.domain.vo.ReplyDTO;
 import com.example.board.domain.vo.ReplyVO;
 import com.example.board.service.ReplyService;
 
@@ -38,10 +39,10 @@ public class ReplyController {
 	
 	// 게시글 댓글 전체 조회
 	@GetMapping(value = "/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE}) // produces를 두 가지 방식으로 설정했다. 기본값은 XML 방식이다.
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") Long bno, @PathVariable("page") int page) { // URL경로의 bno값을 파라미터 bno와 매핑시켜줌
+	public ResponseEntity<ReplyDTO> getList(@PathVariable("bno") Long bno, @PathVariable("page") int page) { // URL경로의 bno값을 파라미터 bno와 매핑시켜줌
 		log.info("getList ...... " + bno);
 
-		return new ResponseEntity<List<ReplyVO>>(replyService.findAllByBNO(new Criteria(page, 10), bno), HttpStatus.OK);
+		return new ResponseEntity<>(new ReplyDTO(replyService.findAllByBNO(new Criteria(page, 10), bno), replyService.getTotal(bno)), HttpStatus.OK);
 	}
 	
 	// 댓글 1개 조회

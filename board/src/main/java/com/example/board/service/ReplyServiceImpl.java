@@ -45,5 +45,10 @@ public class ReplyServiceImpl implements ReplyService {
 	public List<ReplyVO> findAllByBNO(Criteria criteria, Long bno) {
 		return replyDAO.findAllByBNO(criteria, bno);
 	}
+	
+	@Override
+	public int getTotal(Long bno) {
+		return replyDAO.getTotal(bno);
+	}
 
 }

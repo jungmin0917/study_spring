@@ -54,9 +54,9 @@ let replyService = (function(){
 		// 주의 : get은 가져온다는 뜻이 아니고 GET 방식으로 요청한다는 뜻의 get이다! (그렇다고 $.postJSON이 존재하지는 않는다..)
 		// $.getJSON(url, [data], [success]); 이렇게 쓴다.
 		// .json을 붙이는 이유는, XML, JSON 두 방식으로 매핑해놨는데 XML이 디폴트이기 때문.
-		$.getJSON("/replies/" + bno + "/" + page + ".json", function(list){
+		$.getJSON("/replies/" + bno + "/" + page + ".json", function(result){
 			if(callback){
-				callback(list);
+				callback(result);
 			}
 		}).fail(function(xhr, status, err){
 			if(error){
