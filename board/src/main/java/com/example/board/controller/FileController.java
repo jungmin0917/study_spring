@@ -2,6 +2,7 @@ package com.example.board.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.board.domain.vo.FileVO;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Log4j
 
@@ -81,16 +84,31 @@ public class FileController {
 				InputStream in = new FileInputStream(file); // 위에서 업로드한 파일을 스트림에 가져옴
 				
 				if(checkImageType(file)) { // 이미지 파일이면 썸네일 만들어야 함
+					fileVO.setFileType(true);
+					FileOutputStream out = new FileOutputStream(new File(uploadPath, "t_" + fileName)); // uploadPath 디렉터리 안에 t_업로드파일명 으로 썸네일 파일 스트림을 생성함
+					// 원본 파일 스트림, 출력 파일 스트림, 가로, 세로를 입력해준다.
+					Thumbnailator.createThumbnail(in, out, 100, 100);
 					
+					// 스트림 닫음
+					in.close();
+					out.close();
+				}else {
+					fileVO.setFileType(false);
 				}
+				
+				// 완성된 fileVO 객체를 files List에 담음
+				files.add(fileVO);
 				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
+		return new ResponseEntity<List<FileVO>>(files, HttpStatus.OK);
 	}
 	
 	// 업로드 시간을 기준으로 Directory마다 나눠서 저장할 생각임
