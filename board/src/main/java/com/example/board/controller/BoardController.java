@@ -1,18 +1,23 @@
 package com.example.board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.board.domain.vo.BoardDTO;
 import com.example.board.domain.vo.BoardVO;
 import com.example.board.domain.vo.Criteria;
+import com.example.board.domain.vo.FileVO;
 import com.example.board.domain.vo.PageDTO;
 import com.example.board.service.BoardService;
 
@@ -114,6 +119,12 @@ public class BoardController {
 	@GetMapping("/register") // 위의 등록 처리와 URL은 같으나 요청 방식이 다름
 	public void register() {;} // 이렇게 하면 그냥 요청한 URL과 같은 JSP로 이동함 (이 경우엔 /board/register.jsp)
 	
+	// 첨부파일 전체 목록
+	@GetMapping(value = "/files", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody // ajax로 사용할 것임
+	public List<FileVO> getFiles(Long bno){
+		return boardService.getFiles(bno);
+	}
 }
 
 

@@ -32,6 +32,20 @@
 			.reply_buttons .modify-cancel{
 				margin-left: 10px;
 			}
+			
+			.uploadResult{
+				width: 100%;
+			}
+			
+			.uploadResult ul{
+				display: flex;
+				justify-content: center;
+    			flex-wrap: wrap;
+			}
+			
+			.uploadResult ul li{
+				list-style: none;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -66,6 +80,14 @@
 									<div class="field">
 										<h4>작성자</h4>
 										<input type="text" name="writer" value="${board.writer}" readonly>
+									</div>
+									
+<!-- 								첨부파일 보여주기 -->
+									<div class="field">
+										<h4>첨부파일</h4>
+										<div class="uploadResult">
+											<ul></ul>
+										</div>
 									</div>
 								</div>
 								<ul class="actions special">
@@ -369,6 +391,64 @@
 // 		replyService.getReply(rno, function(result){
 // 			console.log(result);
 // 		});
+
+		/* 첨부파일 관련 */
+		$(document).ready(function(){
+			// 해당 게시글의 첨부파일 목록을 받아와야 함
+			// ajax로 해당 게시글 첨부파일 목록 받아와서 해당 files 객체로 showUploadResult를 호출하면 됨
+			
+			var $uploadResult = $(".uploadResult ul");
+			var contextPath = "${pageContext.request.contextPath}";
+			
+			let bno = "${board.bno}";
+
+			// 게시글 첨부파일 목록 받아오기
+			$.ajax({
+				url: contextPath + "/board/files",
+				type: "GET",
+				data: {
+					bno: bno
+				},
+				success: function(res){
+					showUploadResult(res);
+				},
+				error: function(err){
+					console.error(err);
+				}
+			});
+			
+			function showUploadResult(files){
+				var str = "";
+				$(files).each(function(i, file){
+					
+					if(file.fileType){ // 해당 파일이 이미지라면
+						// 파일명을 만들어놓는다
+						var fileName = file.uploadPath + "\\t_" + file.uuid + "_" + file.fileName;
+						fileName = encodeURIComponent(fileName);
+						// 이미지 파일은 아니라도 파일명을 화면에 노출하기 위함인 듯.
+						
+						// uploadResult의 ul 태그 안에 넣을 html 작성
+						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
+						<div>
+							<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
+						</div>
+						<span>` + file.fileName + `</span>
+						</li>`;
+						
+					}else{ // 이미지가 아니라면
+						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
+						<div>
+							<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
+						</div>
+						<span>` + file.fileName + `</span>
+						</li>`;
+					}
+				});
+				
+				$('.uploadResult ul').html(str);
+			}
+			
+		});
 		
 	</script>
 </html>

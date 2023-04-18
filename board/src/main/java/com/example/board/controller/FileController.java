@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -164,7 +166,39 @@ public class FileController {
 		
 		return result;
 	}
+	
+	// 파일 다운로드 메소드 (바이트 배열로 파일 정보를 리턴함)
+	@GetMapping(value="/download", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+	@ResponseBody
+	public ResponseEntity<Resource> download(String fileName) {
+		// FileSystemResource는 파일 시스템에서 파일을 가져오기 위한 Spring의 Resource 인터페이스 구현체임.
+		// 
+		Resource resource = new FileSystemResource("C:\\upload\\" + fileName);
+		
+		if(!resource.exists()) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+
+		// 반환할 때 ResponseEntity에 헤더를 같이 전달해주면서 클라이언트 브라우저가 이걸 다운받으라고 인식시킴
+		HttpHeaders header = new HttpHeaders();
+		
+		// 다운로드할 파일 이름 정해줌
+		String resourceName = resource.getFilename();
+		// uuid는 제거해주자
+		resourceName = resourceName.substring(resourceName.indexOf("_") + 1);
+		
+		
+	}
 }
+
+
+
+
+
+
+
+
+
 
 
 
