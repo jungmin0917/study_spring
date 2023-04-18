@@ -116,7 +116,7 @@
 						</li>`;
 						
 					}else{ // 이미지가 아니라면
-						str += `<li>
+						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
 						<div>
 							<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
 						</div>
@@ -165,17 +165,19 @@
 			
 			$("body").on("click", "input[type='submit']", function(e){
 				e.preventDefault();
-				var form = $(document.registForm);
+				var $form = $(document.registForm);
 				var str = "";
 				
 				// foreach문
 				// input hidden 태그를 넣어서 어떤 파일을 업로드했는지 올릴 것이다.
 				$(".uploadResult ul li").each(function(i, li){
-					`<input type='hidden' name='' value='` + $(li).data(uuid) + `'>`
-					`<input type='hidden' name='' value='` + $(li).data(uploadpath) + `'>`
-					`<input type='hidden' name='' value='` + $(li).data(filename) + `'>`
-					`<input type='hidden' name='' value='` + $(li).data(filetype) + `'>`
+					str += `<input type='hidden' name='files[` + i + `].uuid' value='` + $(li).data("uuid") + `'>`;
+					str += `<input type='hidden' name='files[` + i + `].uploadPath' value='` + $(li).data("uploadpath") + `'>`;
+					str += `<input type='hidden' name='files[` + i + `].fileName' value='` + $(li).data("filename") + `'>`;
+					str += `<input type='hidden' name='files[` + i + `].fileType' value='` + $(li).data("filetype") + `'>`;
 				});
+				
+				$form.append(str).submit();
 			});
 
 			// 업로드할 파일 유효성 검사
