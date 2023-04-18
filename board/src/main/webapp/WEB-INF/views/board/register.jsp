@@ -17,6 +17,7 @@
 			.uploadResult ul{
 				display: flex;
 				justify-content: center;
+    			flex-wrap: wrap;
 			}
 			
 			.uploadResult ul li{
@@ -40,7 +41,7 @@
 					<h3><a href="/board/list" class="button small">목록 보기</a></h3>
 					<div class="content">
 						<div class="form">
-							<form method="post" action="/board/register" id="registForm">
+							<form method="post" action="/board/register" name="registForm" id="registForm">
 								<div class="fields">
 									<div class="field">
 										<h4>제목</h4>
@@ -87,7 +88,7 @@
 	<script type="text/javascript">
 		// 아래는 함수 영역이므로 var를 굳이 피할 필요 없음
 		$(document).ready(function(){
-			var uploadResult = $(".uploadResult ul");
+			var $uploadResult = $(".uploadResult ul");
 			var contextPath = "${pageContext.request.contextPath}";
 			
 			// 파일 타입, 사이즈에 대한 유효성 검사
@@ -107,21 +108,19 @@
 						// 이미지 파일은 아니라도 파일명을 화면에 노출하기 위함인 듯.
 						
 						// uploadResult의 ul 태그 안에 넣을 html 작성
-						str += `<li>
+						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
 						<div>
-							<a href="javascript:;">
-								<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
-							</a>
+							<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
 						</div>
+						<span>` + file.fileName + `</span>
 						</li>`;
 						
 					}else{ // 이미지가 아니라면
 						str += `<li>
 						<div>
-							<a href="javascript:;">
-								<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
-							</a>
+							<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
 						</div>
+						<span>` + file.fileName + `</span>
 						</li>`;
 					}
 				});
@@ -130,6 +129,8 @@
 			}
 			
 			$("body").on("change", "input[type='file']", function(e){
+				$(".uploadResult ul li").remove();
+				
 				// enctype을 굳이 multipart/form-data로 설정하지 않고 ajax로 보내기 위해 FormData객체 생성
 				var formData = new FormData();
 				var $inputFile = $(this);
@@ -160,6 +161,21 @@
 					}
 				});
 				
+			});
+			
+			$("body").on("click", "input[type='submit']", function(e){
+				e.preventDefault();
+				var form = $(document.registForm);
+				var str = "";
+				
+				// foreach문
+				// input hidden 태그를 넣어서 어떤 파일을 업로드했는지 올릴 것이다.
+				$(".uploadResult ul li").each(function(i, li){
+					`<input type='hidden' name='' value='` + $(li).data(uuid) + `'>`
+					`<input type='hidden' name='' value='` + $(li).data(uploadpath) + `'>`
+					`<input type='hidden' name='' value='` + $(li).data(filename) + `'>`
+					`<input type='hidden' name='' value='` + $(li).data(filetype) + `'>`
+				});
 			});
 
 			// 업로드할 파일 유효성 검사

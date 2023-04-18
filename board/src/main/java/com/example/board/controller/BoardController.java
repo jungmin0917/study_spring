@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.board.domain.vo.BoardDTO;
 import com.example.board.domain.vo.BoardVO;
 import com.example.board.domain.vo.Criteria;
 import com.example.board.domain.vo.PageDTO;
@@ -50,17 +51,17 @@ public class BoardController {
 	
 	// 등록 처리
 	@PostMapping("/register")
-	public String register(BoardVO boardVO, RedirectAttributes rttr) {
-		log.info("/register : " + boardVO); // boardVO 객체가 넘어왔는지도 확인
+	public String register(BoardDTO boardDTO, RedirectAttributes rttr) {
+		log.info("/register : " + boardDTO); // boardVO 객체가 넘어왔는지도 확인
 		
-		boardService.register(boardVO);
+		boardService.register(boardDTO);
 
 //		Session에 Flash 영역이 있고, redirect로 전송을 하면 request 영역이 초기화된다.
 //		초기화되기 전에 Flash 영역에 데이터를 저장해놓고, 초기화된 후 Flash 영역에서 데이터를 가지고 온다.
 //		데이터를 가져왔다면 Flash 영역에 있던 데이터는 사라진다.
 		
 //		model.addAttribute("bno", boardVO.getBno());
-		rttr.addFlashAttribute("bno", boardVO.getBno());
+		rttr.addFlashAttribute("bno", boardDTO.getBno());
 		
 //		redirect로 이동할 때는, 경로 앞에 "redirect:"를 붙여 준다
 		return "redirect:/board/list"; // 등록 후 /board/list로 리다이렉트 (이전 Request 내용 비움)
