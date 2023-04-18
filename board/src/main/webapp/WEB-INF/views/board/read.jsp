@@ -63,7 +63,7 @@
 					<h3><a href="/board/list${criteria.getParams()}" class="button small">목록 보기</a></h3>
 					<div class="content">
 						<div class="form">
-							<form action="/board/remove">
+							<form action="/board/remove" class="deleteForm" name="deleteForm">
 								<div class="fields">
 									<div class="field">
 										<h4>번호</h4>
@@ -420,6 +420,8 @@
 			function showUploadResult(files){
 				var str = "";
 				$(files).each(function(i, file){
+					var downFileName = file.uploadPath + "\\" + file.uuid + "_" + file.fileName;
+					downFileName = encodeURIComponent(downFileName);
 					
 					if(file.fileType){ // 해당 파일이 이미지라면
 						// 파일명을 만들어놓는다
@@ -430,7 +432,9 @@
 						// uploadResult의 ul 태그 안에 넣을 html 작성
 						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
 						<div>
-							<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
+							<a href="` + contextPath + `/download?fileName=` + downFileName + `">
+								<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
+							</a>
 						</div>
 						<span>` + file.fileName + `</span>
 						</li>`;
@@ -438,7 +442,9 @@
 					}else{ // 이미지가 아니라면
 						str += `<li data-filename="` + file.fileName + `" data-uuid="` + file.uuid + `" data-uploadpath="` + file.uploadPath + `" data-filetype="` + file.fileType + `">
 						<div>
-							<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
+							<a href="` + contextPath + `/download?fileName=` + downFileName + `">
+								<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
+							</a>
 						</div>
 						<span>` + file.fileName + `</span>
 						</li>`;
@@ -448,6 +454,48 @@
 				$('.uploadResult ul').html(str);
 			}
 			
+		});
+		
+		$(".deleteForm").on("click", "input[type='submit']", function(e){
+			e.preventDefault();
+			
+			var conf = confirm("정말 삭제하시겠습니까?");
+			
+			if(!conf){
+				return;
+			}
+			
+			var contextPath = "${pageContext.request.contextPath}";
+			
+			// 글 삭제 전에 서버에서 파일부터 삭제하도록 함
+			
+			$(".uploadResult ul li").each(function(i, li){
+				var fileName = encodeURIComponent($(li).data("uploadpath") + "\\" + $(li).data("uuid") + "_" + $(li).data("filename"));
+				var thumbFileName = encodeURIComponent($(li).data("uploadpath") + "\\t_" + $(li).data("uuid") + "_" + $(li).data("filename"));
+				var fileType = $(li).data("filetype");
+				
+				console.log(fileName);
+				console.log(fileType);
+				
+				$.ajax({
+					url: contextPath + "/delete",
+					data: {
+						// 컨트롤러에서 String fileName, boolean type를 받음
+						fileName: fileName,
+						thumbFileName: thumbFileName,
+						fileType: fileType
+					},
+					type: "POST",
+					success: function(res){
+						console.log(res);
+					},
+					error: function(err){
+						console.error(err);	
+					}
+				});
+			});
+			
+			$(".deleteForm").submit();
 		});
 		
 	</script>

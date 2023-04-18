@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -98,6 +100,7 @@ public class FileController {
 					in.close();
 					out.close();
 				}else {
+					in.close();
 					fileVO.setFileType(false);
 				}
 				
@@ -171,6 +174,8 @@ public class FileController {
 	@GetMapping(value="/download", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	@ResponseBody
 	public ResponseEntity<Resource> download(String fileName) {
+		log.info("download ...... " + fileName);
+		
 		// FileSystemResource는 파일 시스템에서 파일을 가져오기 위한 Spring의 Resource 인터페이스 구현체임.
 		// 
 		Resource resource = new FileSystemResource("C:\\upload\\" + fileName);
@@ -187,7 +192,53 @@ public class FileController {
 		// uuid는 제거해주자
 		resourceName = resourceName.substring(resourceName.indexOf("_") + 1);
 		
+		try {
+			resourceName = new String(resourceName.getBytes("UTF-8"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
+		// 아래 헤더에 Content-Disposition 설정을 함으로써 이 반환값이 다운로드하는 것임을 알린다.
+		header.add("Content-Disposition", "attachment; filename=" + resourceName);
+		
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+	
+	// 실제 서버에서 파일 삭제하는 메소드
+	@PostMapping(value="/delete")
+	@ResponseBody
+	public void delete(String fileName, String thumbFileName, boolean fileType) { // 이미지이면 썸네일까지 삭제해야 하므로 type도 받아옴
+		log.info("delete file....... " + fileName + ", fileType : " + fileType);
+		
+		try {
+			fileName = URLDecoder.decode(fileName, "UTF-8");
+			thumbFileName = URLDecoder.decode(thumbFileName, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		log.info("decoded fileName : " + fileName);
+		
+		File file = new File("C:\\upload\\" + fileName);
+		
+		log.info(file);
+		
+		if(file.exists()) {
+			log.info("file exists!");
+			file.delete();
+		}
+
+		if(fileType) {
+			// 일단 강사는 아래와 같이했는데, 이러면 문제가 있음.
+			// 원본 파일명에 t_가 들어가면 문제가 될 거임. 근데 일단 그냥 하자..
+			log.info("fileType is true");
+			
+			file = new File("C:\\upload\\" + thumbFileName);
+			
+			if(file.exists()) {
+				file.delete();
+			}
+		}
 	}
 }
 
