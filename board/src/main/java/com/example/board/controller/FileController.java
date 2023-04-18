@@ -128,6 +128,12 @@ public class FileController {
 		// 해당 path에 있는 파일의 MIME 타입을 반환함
 		// File 객체의 toPath는 해당 파일의 path를 반환함
 		String contentType = Files.probeContentType(file.toPath());
+		
+		// 바로가기 이미지는 추가로 처리해줘야 함
+		if(contentType == null) {
+			return false;
+		}
+		
 		return contentType.startsWith("image");
 	}
 	

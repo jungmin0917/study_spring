@@ -96,6 +96,39 @@
 			// 서버에서는 20메가로 설정했었음
 			var maxSize = 1024 * 1024 * 20; // 바이트 단위. 즉 20메가바이트
 			
+			function showUploadResult(files){
+				var str = "";
+				$(files).each(function(i, file){
+					
+					if(file.fileType){ // 해당 파일이 이미지라면
+						// 파일명을 만들어놓는다
+						var fileName = file.uploadPath + "\\t_" + file.uuid + "_" + file.fileName;
+						fileName = encodeURIComponent(fileName);
+						// 이미지 파일은 아니라도 파일명을 화면에 노출하기 위함인 듯.
+						
+						// uploadResult의 ul 태그 안에 넣을 html 작성
+						str += `<li>
+						<div>
+							<a href="javascript:;">
+								<img src = "` + contextPath + `/display?fileName=` + fileName + `" width='100'>
+							</a>
+						</div>
+						</li>`;
+						
+					}else{ // 이미지가 아니라면
+						str += `<li>
+						<div>
+							<a href="javascript:;">
+								<img src = "` + contextPath + `/resources/images/attach.png" width='100'>
+							</a>
+						</div>
+						</li>`;
+					}
+				});
+				
+				$('.uploadResult ul').html(str);
+			}
+			
 			$("body").on("change", "input[type='file']", function(e){
 				// enctype을 굳이 multipart/form-data로 설정하지 않고 ajax로 보내기 위해 FormData객체 생성
 				var formData = new FormData();
@@ -120,7 +153,7 @@
 					processData: false, // multipart로 보내기 위해
 					contentType: false, // multipart로 보내기 위해
 					success: function(res){
-						console.log(res);
+						showUploadResult(res);
 					},
 					error: function(err){
 						console.error(err);
