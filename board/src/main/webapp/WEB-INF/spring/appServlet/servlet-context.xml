@@ -26,4 +26,19 @@
 	<context:component-scan base-package="com.example.board.service" />
 	<context:component-scan base-package="com.example.board.exception"/>
 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
