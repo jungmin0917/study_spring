@@ -103,8 +103,33 @@
 				var files = $inputFile[0].files; // 해당 파일 객체의 files를 불러옴
 				console.log(files);
 				
+				for(let i=0; i<files.length; i++){
+					if(!checkExtension(files[i].name, files[i].size)){
+						return false;
+					}
+					
+					// 정상적으로 성공했으면
+					formData.append("multipartFiles", files[i]); // multipartFiles 키값에 파일이 하나씩 배열로 들어가게끔 해준다.
+				}
+				
+				$.ajax({
+					url: contextPath + "/upload",
+					data: formData,
+					type: "POST",
+					dataType: "JSON",
+					processData: false, // multipart로 보내기 위해
+					contentType: false, // multipart로 보내기 위해
+					success: function(res){
+						console.log(res);
+					},
+					error: function(err){
+						console.error(err);
+					}
+				});
+				
 			});
 
+			// 업로드할 파일 유효성 검사
 			function checkExtension(fileName, fileSize){
 				if(regex.test(fileName)){
 					alert("업로드 할 수 없는 파일의 형식입니다");

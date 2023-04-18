@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -126,6 +129,34 @@ public class FileController {
 		// File 객체의 toPath는 해당 파일의 path를 반환함
 		String contentType = Files.probeContentType(file.toPath());
 		return contentType.startsWith("image");
+	}
+	
+	// 파일명을 전달하면 바이트 코드로 반환하는 메소드
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> display(String fileName){
+		log.info("file name : " + fileName);
+		
+		// DB에 올려놨던 파일명으로 File 객체 생성
+		File file = new File("C:\\upload\\" + fileName);
+		
+		log.info("file : " + file);
+		
+		ResponseEntity<byte[]> result = null; // 바이트 배열을 담은 엔티티 생성
+
+		HttpHeaders header = new HttpHeaders(); // 스프링 프레임워크의 HttpHeaders 객체 생성
+		
+		try {
+			// 해당 파일 정보로 헤더에 파일의 MIME 타입 전달
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			
+			// result에 ResponseEntity 객체 생성하여 file 내용을 바이트코드로 변환한 배열을 담는다. 그리고 만들어 두었던 HttpHeaders 객체와 HttpStatus.OK를 같이 담는다.
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }
 
